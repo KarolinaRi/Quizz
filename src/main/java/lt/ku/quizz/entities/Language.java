@@ -33,9 +33,10 @@ public class Language {
 		super();
 	}
 
-	public Language(String language) {
+	public Language(@Length(min = 3, max = 20) String language, Quizz quizz) {
 		super();
 		this.language = language;
+		this.quizz = quizz;
 	}
 
 	public Integer getId() {
@@ -52,5 +53,13 @@ public class Language {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public Quizz getQuizz() {
+		return quizz;
+	}
+
+	public void setQuizz(Quizz quizz) {
+		this.quizz = quizz;
 	}
 }

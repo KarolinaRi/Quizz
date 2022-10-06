@@ -38,7 +38,7 @@ public class QuizzService {
 	public Quizz updateQuizz(Quizz quizz) {
 		Quizz old=this.getQuizz(quizz.getId());
 		old.setName(quizz.getName());
-		old.setUser(quizz.getUser());
+		old.setUser(old.getUser());
 		old.setQuestions(quizz.getQuestions());
 		old.setLanguage(quizz.getLanguage());
 		quizzRepository.save(old);

@@ -20,6 +20,7 @@ import lt.ku.quizz.entities.Answer;
 import lt.ku.quizz.entities.Question;
 import lt.ku.quizz.entities.Quizz;
 import lt.ku.quizz.entities.User;
+import lt.ku.quizz.services.LanguageService;
 //import lt.ku.klausimynas.entities.User;
 import lt.ku.quizz.services.QuestionService;
 import lt.ku.quizz.services.QuizzService;
@@ -38,11 +39,15 @@ public class QuizzController {
 	@Autowired
 	QuestionService questionService;
 	
+	@Autowired 
+	LanguageService languageService;
+	
 	@GetMapping("/")  
 	public String quizzList(Model model) {
 		model.addAttribute("quizzes", quizzService.getQuizzes());
 		model.addAttribute("users", userService.getUsers());
 		model.addAttribute("questions", questionService.getQuestions());
+		model.addAttribute("languages", languageService.getLanguages());
 		return "quizz_list";
 	}
 	
@@ -55,6 +60,7 @@ public class QuizzController {
 		
 		model.addAttribute("quizz", q);
 		model.addAttribute("users", userService.getUsers());
+		model.addAttribute("languages", languageService.getLanguages());
 //		model.addAttribute("questions", new Question());
 		return "quizz_new";
 	}
@@ -99,6 +105,7 @@ public class QuizzController {
 		model.addAttribute("quizz", quizzService.getQuizz(id));
 		model.addAttribute("users", userService.getUsers());
 		model.addAttribute("questions", questionService.getQuestions());
+		model.addAttribute("languages", languageService.getLanguages());
 		return "quizz_update";
 	}
 	
@@ -110,6 +117,7 @@ public class QuizzController {
 	
 	@GetMapping("/delete/{id}")
 	public String quizzDelete(@PathVariable("id") Integer id) {
+		
 		quizzService.deleteQuizz(id);
 		return "redirect:/quizz/";
 	}
