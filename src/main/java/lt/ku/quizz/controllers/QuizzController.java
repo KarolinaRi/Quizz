@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lt.ku.quizz.entities.Answer;
+import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.entities.Question;
 import lt.ku.quizz.entities.Quizz;
 import lt.ku.quizz.entities.User;
+import lt.ku.quizz.services.AnswerService;
 import lt.ku.quizz.services.LanguageService;
 //import lt.ku.klausimynas.entities.User;
 import lt.ku.quizz.services.QuestionService;
@@ -38,6 +40,9 @@ public class QuizzController {
 	
 	@Autowired
 	QuestionService questionService;
+	
+	@Autowired
+	AnswerService answerService;
 	
 	@Autowired 
 	LanguageService languageService;
@@ -66,19 +71,29 @@ public class QuizzController {
 	}
 	
 	@PostMapping("/new")
-	public String addQuizz( 
-							@RequestParam("question") Question question, Model model
-							) {
+	public String addQuizz(Model model, @RequestParam("name") String name, 
+			@RequestParam("language") Language language, @RequestParam("user") User user, 
+			//@RequestParam("question1") String question1, @RequestParam("answer1") String answer1,
+			//@RequestParam("question2") String question2, @RequestParam("answer2") String answer2,			
+			@RequestParam("question") List<Question> question, @RequestParam("answer") String answer,
+			@RequestParam("answerType") Boolean type) {
+		
+		
 		Quizz q = new Quizz();
-//		question.setQuizz(q);
+		Question qq = new Question();
+		//List<Question> qus;
+		Answer a = new Answer(qq, answer, type);
 		
-		if(q.getQuestions() == null) {
-			q.setQuestions(new ArrayList<Question>());
-		}
-		q.getQuestions().add(question);
-		questionService.addQuestion(question);
+		question.add(qq);
+		model.addAttribute("questions", questionService.addQuestion(qq));
+		model.addAttribute("answers", answerService.addAnswer(a));
+//		questionService.addQuestion(qq);
+//		List<Answer> answer;
+//		Answer a = new Answer();
+//		model.addAttribute("answers", answerService.addAnswer(a));
+		q = new Quizz(user, name, question, language);
+		
 		quizzService.addQuizz(q);
-		
 		return "redirect:/quizz/";
 	}
 	 
@@ -105,6 +120,7 @@ public class QuizzController {
 		model.addAttribute("quizz", quizzService.getQuizz(id));
 		model.addAttribute("users", userService.getUsers());
 		model.addAttribute("questions", questionService.getQuestions());
+		model.addAttribute("answers", answerService.getAnswers());
 		model.addAttribute("languages", languageService.getLanguages());
 		return "quizz_update";
 	}
@@ -134,7 +150,7 @@ public class QuizzController {
 		int score = 0;		
 		String[] questionIds = req.getParameterValues("questionId");
 		for(String questionId : questionIds) {
-			System.out.println(questionId.toString());
+			//System.out.println(questionId.toString());
 			int answerIdCorrect = questionService.findAnswerIdCorrect(Integer.parseInt(questionId));
 			if(answerIdCorrect == Integer.parseInt(req.getParameter("q_" + questionId))) {
 				score++;
@@ -143,16 +159,4 @@ public class QuizzController {
 		req.setAttribute("score", score);
 		return "result";
 	}
-	
-//	@PostMapping("/quizznew")
-//	public String addQuestion(@RequestParam("quizz") Quizz quizz, 
-//							@RequestParam("question") String question, 
-//							@RequestParam("answers") List<Answer> answers
-////							@RequestParam("tipas") List<String> tipas
-//							) {
-//		Question q = new Question(quizz, question, answers);
-//		q = questionService.addQuestion(q);		
-//		return "redirect:/quizz/new/";
-//	}
-	
 }

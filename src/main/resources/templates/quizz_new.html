@@ -39,7 +39,7 @@
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Naudotojas</label>
-								<select class="form-control" name="userId">
+								<select class="form-control" name="user">
 									<option></option>
 									<option th:each="user: ${users}" th:value="${user.id}" th:text="${user.name + ' ' + user.surname}"></option>
 								</select>
@@ -56,21 +56,43 @@
 											<table>
 												<thead>
 													<tr>
-														<th>Klausimas</th>
-														<th>Atsakymas</th>
+														<th>Klausimai</th>
+														<th>Atsakymai</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr name="question">
-														<td><input type="text" name="question.question"></td>
-														<td >
-														<label class="form-label"> Atsakymas</label>
-														<input type="text" name="question.answers.answer">
+													<tr>
+														<td>
+															<label>Klausimas</label>
+															<input type="text" name="question">
+														</td>
+														<td>
+															<label>Atsakymas</label>
+															<input type="text" th:name="question.answers.answer"><br>
+															<label>Tipas</label>	
+															<input type="radio" th:name="question.answers.type+${id}" th:value="0" th:text="Wrong">
+															<input type="radio" th:name="question.answers.type" th:value="1" th:text="Correct"><br>	
+														</td>
+														<td>
+															<label>Klausimas</label>
+															<input type="text" name="question">
+														</td>
+														<td>
+															<label>Atsakymas</label>
+															<input type="text" th:name="question.answers.answer"><br>
+															<label>Tipas</label>	
+															<input type="radio" th:name="question.answers.type+${id}" th:value="0" th:text="Wrong">
+															<input type="radio" th:name="question.answers.type" th:value="1" th:text="Correct"><br>	
+														</td>
+														<!--  <td><input type="text" name="question.question"></td>
+														<td ><br>
+														<label class="form-label" name="answer"> Atsakymas</label>
+														<input type="text" name="question.answers.answer"><br>
 														
 														<label class="form-label">Tipas</label>
 														<input type="radio" name="question.answers.type" th:value="0" th:text="Wrong">
-														<input type="radio" name="question.answers.type" th:value="1" th:text="Correct">
-														</td>
+														<input type="radio" name="question.answers.type" th:value="1" th:text="Correct"><br>
+														</td>-->
 													</tr>
 												</tbody>
 											</table>
