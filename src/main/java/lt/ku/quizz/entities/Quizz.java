@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,10 +32,7 @@ public class Quizz {
 	@OneToMany(mappedBy = "quizz")
 	private List<Question> questions;
 	
-//	@Column (length = 3)
-//	private String language;   //TODO pakeist i klase
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="language_id")
 	private Language language;
 
@@ -42,13 +40,12 @@ public class Quizz {
 		super();
 	}
 
-//	public Quizz(User user, String name, List<Question> questions, String language) {
-//		super();
-//		this.user = user;
-//		this.name = name;
-//		this.questions = questions;
-//		this.language = language;
-//	}
+	public Quizz(User user, String name, Language language) {
+		super();
+		this.user = user;
+		this.name = name;
+		this.language = language;
+	}
 
 	public Quizz(User user, String name, List<Question> questions, Language language) {
 		super();
@@ -91,7 +88,9 @@ public class Quizz {
 //		this.language = language;
 //	}
 	
-	
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
 
 	public List<Question> getQuestions() {
 		return questions;
@@ -105,8 +104,6 @@ public class Quizz {
 		this.language = language;
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
-	}
+	
 
 }

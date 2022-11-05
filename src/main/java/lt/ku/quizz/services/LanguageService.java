@@ -31,7 +31,7 @@ public class LanguageService {
 	public Language updateLanguage(Language language) {
 		Language old=this.getLanguage(language.getId());
 		old.setLanguage(language.getLanguage());
-		old.setQuizz(language.getQuizz());
+		old.setQuizzes(language.getQuizzes());
 		languageRepository.save(old);
 		return old;
 	}

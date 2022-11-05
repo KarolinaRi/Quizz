@@ -1,5 +1,7 @@
 package lt.ku.quizz.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,17 +28,17 @@ public class Language {
 	@Length(min = 3, max = 20)
 	private String language;
 	
-	@OneToOne(mappedBy = "language")
-	private Quizz quizz;
+	@OneToMany(mappedBy = "language")
+	private List<Quizz> quizzes;
 
 	public Language() {
 		super();
 	}
 
-	public Language(@Length(min = 3, max = 20) String language, Quizz quizz) {
+	public Language(@Length(min = 3, max = 20) String language, List<Quizz> quizzes) {
 		super();
 		this.language = language;
-		this.quizz = quizz;
+		this.quizzes = quizzes;
 	}
 
 	public Integer getId() {
@@ -55,11 +57,13 @@ public class Language {
 		this.language = language;
 	}
 
-	public Quizz getQuizz() {
-		return quizz;
+	public List<Quizz> getQuizzes() {
+		return quizzes;
 	}
 
-	public void setQuizz(Quizz quizz) {
-		this.quizz = quizz;
+	public void setQuizzes(List<Quizz> quizzes) {
+		this.quizzes = quizzes;
 	}
+
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,14 +17,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sun.net.httpserver.Authenticator.Result;
+
 import lt.ku.quizz.entities.Answer;
 import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.entities.Question;
 import lt.ku.quizz.entities.Quizz;
 import lt.ku.quizz.entities.User;
+import lt.ku.quizz.repositories.AnswerRepository;
+import lt.ku.quizz.repositories.QuestionRepository;
+import lt.ku.quizz.repositories.QuizzRepository;
 import lt.ku.quizz.services.AnswerService;
 import lt.ku.quizz.services.LanguageService;
-//import lt.ku.klausimynas.entities.User;
 import lt.ku.quizz.services.QuestionService;
 import lt.ku.quizz.services.QuizzService;
 import lt.ku.quizz.services.UserService;
@@ -47,6 +52,15 @@ public class QuizzController {
 	@Autowired 
 	LanguageService languageService;
 	
+	@Autowired
+	QuestionRepository questionRepository;
+	
+	@Autowired
+	QuizzRepository quizzRepository;
+	
+	@Autowired
+	AnswerRepository answerRepository;
+	
 	@GetMapping("/")  
 	public String quizzList(Model model) {
 		model.addAttribute("quizzes", quizzService.getQuizzes());
@@ -58,62 +72,80 @@ public class QuizzController {
 	
 	@GetMapping("/new")  
 	public String quizzNew(Model model, Integer id) {
-		Quizz q= new Quizz();
-		for(int i = 0; i <= 4; i++) {
-			quizzService.addQuestion(new Question());
-		}
-		
-		model.addAttribute("quizz", q);
-		model.addAttribute("users", userService.getUsers());
+//		Quizz q= new Quizz();
+//		/*for(int i = 0; i <= 4; i++) {
+//			quizzService.addQuestion(new Question());
+//		}*/
+//		
+//		model.addAttribute("quizz", q);
+    	model.addAttribute("users", userService.getUsers());
 		model.addAttribute("languages", languageService.getLanguages());
-//		model.addAttribute("questions", new Question());
+////		model.addAttribute("questions", new Question());
 		return "quizz_new";
 	}
 	
-	@PostMapping("/new")
-	public String addQuizz(Model model, @RequestParam("name") String name, 
-			@RequestParam("language") Language language, @RequestParam("user") User user, 
-			//@RequestParam("question1") String question1, @RequestParam("answer1") String answer1,
-			//@RequestParam("question2") String question2, @RequestParam("answer2") String answer2,			
-			@RequestParam("question") List<Question> question, @RequestParam("answer") String answer,
-			@RequestParam("answerType") Boolean type) {
-		
-		
-		Quizz q = new Quizz();
-		Question qq = new Question();
-		//List<Question> qus;
-		Answer a = new Answer(qq, answer, type);
-		
-		question.add(qq);
-		model.addAttribute("questions", questionService.addQuestion(qq));
-		model.addAttribute("answers", answerService.addAnswer(a));
-//		questionService.addQuestion(qq);
-//		List<Answer> answer;
-//		Answer a = new Answer();
-//		model.addAttribute("answers", answerService.addAnswer(a));
-		q = new Quizz(user, name, question, language);
-		
-		quizzService.addQuizz(q);
-		return "redirect:/quizz/";
-	}
-	 
-	
-	
 //	@PostMapping("/new")
-//	public String addQuizz(
-//			@ModelAttribute Quizz quizz, 			
-//			@RequestParam("userId") Integer userId,
-//			@RequestParam("questions") List<Question> questions,
-//			@RequestParam("name") String name,
-//			@RequestParam("language") String language) {
-//		quizz.setName(name);
-//		quizz.setLanguage(language);
-//		quizz.setUser(userService.getUser(userId));
-//		quizz.setQuestions(questionService.getQuestions());
-//		quizzService.addQuizz(quizz);
+//	public String addQuizz(Model model, @RequestParam("name") String name, 
+//			@RequestParam("language") Language language, @RequestParam("user") User user, 		
+//			@RequestParam("questions") List<Question> question, @RequestParam("answer") String answer,
+//			@RequestParam("answerType") Boolean type) {
+//		Quizz q = new Quizz();
+//		Question qq = new Question();
+//		Answer a = new Answer(qq, answer, type);
+//		
+//		question.add(qq);
+//		model.addAttribute("questions", questionService.addQuestion(qq));
+//		model.addAttribute("answers", answerService.addAnswer(a));
+//		q = new Quizz(user, name, question, language);
+//		
+//		quizzService.addQuizz(q);
+//		
 //		return "redirect:/quizz/";
 //	}
 	
+	@PostMapping("/new")
+	public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("user") User user) {
+		Quizz q = new Quizz(user, name, language);
+		
+		quizzRepository.save(q);
+		
+		return "redirect:/quizz/new/question/";
+	}
+
+	
+	@GetMapping("/new/question")
+	public String questionNew(Model model) {
+		model.addAttribute("quizzes", quizzService.getQuizzes());
+		
+		return "question_new";
+	}
+	
+	@PostMapping("/new/question")
+	public String addQuestion(@RequestParam("question") String question, @RequestParam("quizz") Quizz quizz) {
+			//@RequestParam("answers") List<Answer> answers) {
+		//answers.add(new Answer());
+		Question q = new Question(quizz, question);
+		System.out.println("quizz kiekis: " + quizzService.getQuizzes().size());
+		
+		questionRepository.save(q);
+		return "redirect:/quizz/new/question/answer";
+	}
+
+	@GetMapping("/new/question/answer")
+	public String answerNew(Model model) {
+		model.addAttribute("questions", questionService.getQuestions());
+		
+		return "answer_new";
+	}
+	
+	@PostMapping("/new/question/answer")
+	public String addAnswer(@RequestParam("answer") String answer, @RequestParam("question") Question question, 
+			@RequestParam("correct") Boolean correct) {
+		Answer a = new Answer(question, answer, correct);
+		
+		answerRepository.save(a);
+		return "redirect:/quizz/new/question/";
+	}
 	
 	@GetMapping("/update/{id}")
 	public String quizzNew(@PathVariable("id") Integer id, Model model) {

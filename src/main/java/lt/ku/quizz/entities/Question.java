@@ -29,16 +29,10 @@ public class Question {
 //	@JoinColumn(name = "quizz_id")
 	private Quizz quizz;
 	
-//	Integer ats_id; //teisingo atsakymo id
 	
 	@Column(length = 100)
 	@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu")
 	private String question;
-	
-//	private String[] type = {"4 pasirenkami", "3 pasirenkami", "2 pasirenkami", "true / false"}; //atsakymo tipas: true/false, pasirenkamas 
-	
-//	@Column
-//	private List<String> tipas = Arrays.asList(type);
 	
 	@OneToMany(mappedBy = "question")
 	private List<Answer> answers;
@@ -54,6 +48,13 @@ public class Question {
 		this.quizz = quizz;
 		this.question = question;
 		this.answers = answers;
+	}
+	
+	public Question(Quizz quizz,
+			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question) {
+		super();
+		this.quizz = quizz;
+		this.question = question;
 	}
 
 //	public Question(Quizz quizz,
@@ -97,12 +98,4 @@ public class Question {
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
-
-//	public List<String> getTipas() {
-//		return tipas;
-//	}
-//
-//	public void setTipas(List<String> tipas) {
-//		this.tipas = tipas;
-//	}
 }
