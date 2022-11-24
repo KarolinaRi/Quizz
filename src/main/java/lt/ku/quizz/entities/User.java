@@ -33,9 +33,9 @@ public class User implements UserDetails{
 //	@Length(min=3, max=64, message)
 	private String username;
 	
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false, length = 255)
 	@NotNull
-	@Length(min=8, max=64, message="Slaptažodis turi būti sudarytas iš bent 8 simbolių")
+	@Length(min=8, max=255, message="Slaptažodis turi būti sudarytas iš bent 8 simbolių")
 	private String password;
 	
 	@Column(nullable = false, length = 20)

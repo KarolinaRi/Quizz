@@ -9,7 +9,8 @@
 <body>
 	<div th:insert="fragments/navigation.html :: nav"></div>
 	
-	<form method="post" th:object="${quizz}">
+	<form th:action="'/quizz/play/'+${quizz.id}" method="post" th:object="${quizz}">
+		<input type="hidden" name="id" th:value="*{id}">
 		<ol type="1">
 			<li th:each="question: ${questions}">
 				<input type="hidden" th:value="${question.id}" th:name="questionId" th:text="${question.question}">

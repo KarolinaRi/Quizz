@@ -21,7 +21,7 @@ public class LanguageService {
 	}
 	
 	public Language getLanguage(Integer id) {
-		return languageRepository.getReferenceById(id);
+		return languageRepository.getById(id);
 	}
 	
 	public Language addLanguage(Language language ) {
@@ -31,7 +31,7 @@ public class LanguageService {
 	public Language updateLanguage(Language language) {
 		Language old=this.getLanguage(language.getId());
 		old.setLanguage(language.getLanguage());
-		old.setQuizzes(language.getQuizzes());
+		//old.setQuizzes(language.getQuizzes());
 		languageRepository.save(old);
 		return old;
 	}

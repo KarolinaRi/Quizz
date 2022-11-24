@@ -19,21 +19,24 @@ public class QuizzService {
 	@Autowired
 	QuestionRepository questionRepository;
 	
+	@Autowired
+	QuestionService questionService;
+	
 	public List<Quizz> getQuizzes(){
 		return quizzRepository.findAll();
 	}
 	
 	public Quizz getQuizz(Integer id) {
-		return quizzRepository.getReferenceById(id);
+		return quizzRepository.getById(id);
 	}
 	
 	public Quizz addQuizz(Quizz quizz) {
 		return quizzRepository.save(quizz);
 	}
 	
-	public Question addQuestion(Question question) {
-		return questionRepository.save(question);
-	}
+//	public Question addQuestion(Question question) {
+//		return questionRepository.save(question);
+//	}
 	
 	public Quizz updateQuizz(Quizz quizz) {
 		Quizz old=this.getQuizz(quizz.getId());
@@ -42,6 +45,7 @@ public class QuizzService {
 		old.setQuestions(quizz.getQuestions());
 		old.setLanguage(quizz.getLanguage());
 		quizzRepository.save(old);
+		
 		return old;
 	}
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lt.ku.quizz.entities.User;
@@ -21,13 +22,15 @@ public class UserService implements UserDetailsService{
 		return userRepository.findAll();
 	}
 	
+	//public User getByUsername()
+	
 	public User getUser(Integer id) {
-		return userRepository.getReferenceById(id);
+		return userRepository.getById(id);
 	}
 	
-	public User addUser(User user) {
+	/*public User addUser(User user) {
 		return userRepository.save(user);
-	}
+	}*/
 	
 	public User updateUser(User user) {
 		User old=this.getUser(user.getId());
@@ -43,6 +46,12 @@ public class UserService implements UserDetailsService{
 	
 	public void deleteUser(Integer id) {
 		userRepository.deleteById(id);
+	}
+	
+	public User addUser(User user) {
+		user.setPassword((new BCryptPasswordEncoder()).encode(user.getPassword()));
+		
+		return userRepository.save(user);
 	}
 	
 

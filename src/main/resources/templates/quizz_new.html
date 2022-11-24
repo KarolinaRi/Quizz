@@ -15,7 +15,7 @@
 					<div class="card-header">Pridėti naują klausimyną</div>
 					<div class="card-body">
 						<form action="/quizz/new" method="post" th:object="${quizz}">
-						 	<!--  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
+						    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 							<div class="mb-3">
 								<label class="form-label">Pavadinimas</label>
 								<input type="text" class="form-control" name="name" >

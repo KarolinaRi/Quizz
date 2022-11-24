@@ -1,5 +1,8 @@
 package lt.ku.quizz.controllers;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +27,14 @@ public class UserController {
 	
 	@GetMapping("/")  
 	public String userList(Model model) {
-		model.addAttribute("users", userService.getUsers());
-		return "user_list";
+		//model.addAttribute("user", userService.getUsers());
+//		UserDetails u = userService.loadUserByUsername(null);
+//		u.getUsername();
+		model.addAttribute("username", currentUserNameSimple(null));
+		
+		//currentUserNameSimple(null);
+		
+		return "user_profile";
 	}
 	
 	@GetMapping("/new")  
@@ -33,24 +42,9 @@ public class UserController {
 		return "user_new";
 	}
 	
-//	@PostMapping("/new")
-//	public String addUser(	@RequestParam("username") String username, 
-//							@RequestParam("password") String password, 
-//							@RequestParam("name") String name,
-//							@RequestParam("surname") String surname,
-//							@RequestParam("email") String email,
-//							@RequestParam("role") String role
-//							) {
-//		User u = new User(username, password, name, surname, email, role);
-//		u = userService.addUser(u);
-//		return "redirect:/user/";
-//	}
-	
 	@PostMapping("/new")
 	public String addUser(Model model, @Valid @ModelAttribute User user, BindingResult userResult) {
 		if(userResult.hasErrors()) {
-			
-//			model.addAttribute("client", clientService.getClients());
 			return "user_new";
 		}
 		userService.addUser(user);
@@ -76,5 +70,9 @@ public class UserController {
 		return "redirect:/user/";
 	}
 	
-	
+	@GetMapping("/username")
+	public String currentUserNameSimple(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return principal.getName();
+    }
 }

@@ -19,7 +19,7 @@ public class AnswerService {
 	}
 	
 	public Answer getAnswer(Integer id) {
-		return answerRepository.getReferenceById(id);
+		return answerRepository.getById(id);
 	}
 	
 	public Answer addAnswer(Answer answer) {

@@ -71,7 +71,6 @@ public class Quizz {
 		this.user = user;
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -79,14 +78,6 @@ public class Quizz {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-//	public String getLanguage() {
-//		return language;
-//	}
-//
-//	public void setLanguage(String language) {
-//		this.language = language;
-//	}
 	
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
@@ -103,7 +94,4 @@ public class Quizz {
 	public void setLanguage(Language language) {
 		this.language = language;
 	}
-
-	
-
 }

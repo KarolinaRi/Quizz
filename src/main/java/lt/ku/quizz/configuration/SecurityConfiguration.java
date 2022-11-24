@@ -41,16 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		http.csrf().disable()
+		http
 			.authorizeRequests()
-				.antMatchers("/user/new").hasAnyRole("admin")
-				.antMatchers("/").permitAll()
-				.antMatchers("/user/").permitAll()
+				.antMatchers("/user/new").permitAll()
+				.antMatchers("/user/").hasAnyRole("user")
+				.antMatchers("/").permitAll()	
 				.antMatchers("/quizz/").permitAll()
 				.antMatchers("/quizz/play/").permitAll()
-//				.antMatchers("/registrations/").permitAll()
 				.antMatchers("/login*").permitAll()
-				.antMatchers("/register*").permitAll()
 				.anyRequest().authenticated()
 		
 		.and()
@@ -64,9 +62,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.logoutSuccessUrl("/");
 	}
 
-	@Bean
+	/*@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
+	}*/
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+//    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

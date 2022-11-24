@@ -38,11 +38,12 @@
 							<div class="mb-3">
 								<label class="form-label">Klausimai</label>
 								<ol type="1">
-									<li th:each="question: ${questions}">
-										<input type="hidden" th:value="${question.id}" th:name="questions" th:text="${question.question}">
+									<li th:each="question: ${quizz.questions}">
+										<input type="hidden" th:value="*{question.id}">
+										<input type="text" th:value="*{question.question}">
 										<ol type="a">
 											<li th:each="answer: ${question.answers}">
-												<input type="radio" th:name="q_+${question.id}" th:value="${answer.id}" th:text="${answer.answer}">
+												<input type="text" th:value="*{answer.answer}">
 											</li>
 										</ol>
 									</li>
