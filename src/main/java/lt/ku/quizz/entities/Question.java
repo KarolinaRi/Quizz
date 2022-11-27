@@ -1,5 +1,6 @@
 package lt.ku.quizz.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,24 +35,36 @@ public class Question {
 	@OneToMany(mappedBy = "question")
 	private List<Answer> answers;
 
+	//private enum types {TM, pasirenkami};
+	@Column(nullable = false)
+	private String type; // = {"True/False", "Pasirenkami"};
+	
+	private Integer answerQuantity;
+	
+	//private Integer answerCount;
+	
 	public Question() {
 		super();
 	}
 
 	public Question(Quizz quizz,
 			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question,
-			List<Answer> answers) {
+			List<Answer> answers, String type, Integer answerQuantity) {
 		super();
 		this.quizz = quizz;
 		this.question = question;
 		this.answers = answers;
+		this.type = type;
+		this.answerQuantity = answerQuantity;
 	}
 	
 	public Question(Quizz quizz,
-			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question) {
+			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question, String type, Integer answerQuantity) {
 		super();
 		this.quizz = quizz;
 		this.question = question;
+		this.type = type;
+		this.answerQuantity = answerQuantity;
 	}
 
 //	public Question(Quizz quizz,
@@ -95,4 +108,21 @@ public class Question {
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Integer getAnswerQuantity() {
+		return answerQuantity;
+	}
+
+	public void setAnswerQuantity(Integer answerQuantity) {
+		this.answerQuantity = answerQuantity;
+	}
+	
 }

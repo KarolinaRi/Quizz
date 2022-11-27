@@ -91,29 +91,36 @@ public class QuizzController {
 	}
 	
 	@PostMapping("/new/question")
-	public String addQuestion(@RequestParam("question") String question, @RequestParam("quizz") Quizz quizz) {
-		Question q = new Question(quizz, question);
+	public String addQuestion(@RequestParam("question") String question, @RequestParam("quizz") Quizz quizz, @RequestParam("type") String type,
+			@RequestParam("answerQuantity") Integer answerQuantity, Model model) {
+		Question q = new Question(quizz, question, type, answerQuantity);
+		Integer id = q.getId();
+		System.out.println(id);
+		model.addAttribute("id", id);
 		
 		questionRepository.save(q);
-		return "redirect:/quizz/new/question/answer/";
+		return "redirect:/quizz/new/question/{id}";
 	}
 
-	@GetMapping("/new/question/answer")
-	public String answerNew(Model model) {
+	@GetMapping("/new/question/{id}")
+	public String answerNew(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("questions", questionService.getQuestions());
+		model.addAttribute("question", questionService.getQuestion(id));
+		
 	//	model.addAttribute("question", questionService.getQuestion(question.getId()));
 		//model.addAttribute("lastQquestion", questionService.getQuestion(quizzService.getQuizzes().size()-1));
 		
 		return "answer_new";
 	}
 	
-	@PostMapping("/new/question/answer")
-	public String addAnswer(@RequestParam("answer") String answer, @RequestParam("question") Question question, 
-			@RequestParam("correct") Boolean correct) {
-		//model.addAttribute("question", questionService.getQuestion(question.getId()));
-		Answer a = new Answer(question, answer, correct);
-		
-		answerRepository.save(a);
+	@PostMapping("/new/question/{id}")
+	public String addAnswer(@PathVariable("id") Integer id, List<Answer> answers) {
+		Question question = questionService.getQuestion(id);
+		for(int i = 0; i < question.getAnswerQuantity(); i++) {
+			Answer a = new Answer();
+			answers.add(a);
+			answerRepository.save(a);
+		}
 		return "redirect:/quizz/new/question/";
 	}
 	
@@ -160,14 +167,19 @@ public class QuizzController {
 	@PostMapping("/play/{id}")
 	public String submit(HttpServletRequest req, @PathVariable("id") Integer id) {
 		int score = 0;		
+		int quantity = 0;
 		Quizz quizz = quizzService.getQuizz(id);
 		for(Question question: quizz.getQuestions()) {
+			quantity++;
 			int answerIdCorrect = questionService.findAnswerIdCorrect(question.getId());
 			if(answerIdCorrect == Integer.parseInt(req.getParameter("q_" + question.getId()))) {
 				score++;
 			}
 		}
+		req.setAttribute("quizz", quizz);
+		req.setAttribute("questions", questionService.findByQuizz(quizz));
 		req.setAttribute("score", score);
+		req.setAttribute("quantity", quantity);
 		return "result";
 	}
 }

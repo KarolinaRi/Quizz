@@ -38,6 +38,7 @@ public class QuestionService {
 		old.setQuizz(question.getQuizz());
 		old.setQuestion(question.getQuestion());
 		old.setAnswers(question.getAnswers());
+		old.setType(question.getType());
 		questionRepository.save(old);
 		return old;
 	}

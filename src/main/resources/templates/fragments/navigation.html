@@ -15,9 +15,9 @@
         <li class="nav-item">
           <a class="nav-link" th:classappend="${ #httpServletRequest.getRequestURI()=='/quizz/'?'active':'' }" href="/quizz/">Klausimynai</a>
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" th:classappend="${ #httpServletRequest.getRequestURI()=='/user/'?'active':'' }" href="/user/">Paskyra</a>
-        </li> -->
+        </li> 
         
       </ul>
       <div class="d-flex me-3" sec:authorize="isAuthenticated()" >

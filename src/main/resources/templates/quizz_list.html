@@ -9,44 +9,25 @@
 <body>
 	<div th:insert="fragments/navigation.html :: nav"></div>
 	<div class="container">
+		<a href="/quizz/new" class="btn btn-success">Pridėti naują klausimyną</a>
 		<div class="row">
-			<div class="col-md-12 mt-5">
-				<div class="card">
-					<div class="card-header">Klausimynų duomenys</div>
+			<div class="col-md-3 mt-5">
+				<div th:each="quizz:${quizzes}">
+					<!--  Klausimynas: <span th:text="${quizz.name}"></span>
+					-->
+					<div class="card">					
+					<div class="card-header" th:text=${quizz.name}></div>
 					<div class="card-body">
-						<a href="/quizz/new" class="btn btn-success">Pridėti naują klausimyną</a>
-						<table class="table">
-						  <tr>
-						  	<th>Pavadinimas</th>
-						  	<th>Klausimu id</th>
-						  	<th>Kurejas</th>
-						  	<th>Kalba</th>
-						  	<th>Veiksmai</th>
-						  </tr>
-						  
-						  <tr th:each="quizz: ${quizzes}">
-						  	<td th:text="${quizz.name}"></td>
-						  	<td>
-						  		<div th:each="question: ${quizz.questions}">
-						  			<span th:text="${question.id}"></span>
-						  		</div>
-						  	</td>
-						   <td th:text="${quizz.user.name}"></td>	
-						  	<td th:text="${quizz.language.language}"></td>
-						  
-						  	<td style="width: 200px;">
-						  		<a th:href="'/quizz/update/'+${quizz.id}" class="btn btn-success">Redaguoti</a>
-						  		<a th:href="'/quizz/delete/'+${quizz.id}" class="btn btn-danger">Ištrinti</a>
-						  		<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Zaisti</a>
-						  	</td>
-						  
-						  </tr>
+						Kalba: <span th:text="${quizz.language.language}"></span> <br>
+						Kurejas: <span th:text="${quizz.user.name}"></span> <br>
 						
-						</table>
-					
+						<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Zaisti</a>
+			
 					</div>
 				</div>
 			</div>
+			</div>
+			
 		</div>
 	</div>
 	

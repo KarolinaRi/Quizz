@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -15,9 +17,8 @@ import lt.ku.quizz.services.UserService;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter{    
 
-	
 	@Autowired
 	UserService userService;
 	
@@ -41,10 +42,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
+
+		
 		http
 			.authorizeRequests()
+				.antMatchers("/user/").permitAll()
 				.antMatchers("/user/new").permitAll()
-				.antMatchers("/user/").hasAnyRole("user")
 				.antMatchers("/").permitAll()	
 				.antMatchers("/quizz/").permitAll()
 				.antMatchers("/quizz/play/").permitAll()
@@ -73,5 +76,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+
+    
 
 }

@@ -8,13 +8,31 @@
 </head>
 <body>
 
-	<div th:insert="fragments/navigation.html :: nav"></div>
-	<h3>Result</h3>
-	
+	<div th:insert="fragments/navigation.html :: nav"></div>	
+	<div></div>
 	<div class="container">
-		<div class="mb-3">
-			
-			Score: <span th:text="${score}"></span>
+		<div class="row">
+			<div class="card">
+				<div class="card-header">Rezultatai</div>
+				<div class="card-body">
+					<div class="mb-3">
+						Teisingai atsakyta: <span th:text="${score}"></span> <br>
+						Is viso klausimu: <span th:text="${quantity}"></span> <br>
+						
+						<label class="form-label">Klausimai</label>
+								<ol type="1">
+									<li th:each="question: ${quizz.questions}">
+										<input type="hidden" th:value="${question.question}" th:text="${question.question}">
+										<ol type="a">
+											<li th:each="answer: ${question.answers}">
+												<input type="radio" th:value="${answer.answer}" th:text="${answer.answer}">
+											</li>
+										</ol>
+									</li>
+								</ol>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
