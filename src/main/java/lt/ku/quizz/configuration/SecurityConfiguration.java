@@ -52,6 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.antMatchers("/quizz/").permitAll()
 				.antMatchers("/quizz/play/").permitAll()
 				.antMatchers("/login*").permitAll()
+				.antMatchers("/language/").hasAnyRole("admin")
+				.antMatchers("/theme/").hasAnyRole("admin")
 				.anyRequest().authenticated()
 		
 		.and()

@@ -19,6 +19,7 @@ import lt.ku.quizz.entities.Answer;
 import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.entities.Question;
 import lt.ku.quizz.entities.Quizz;
+import lt.ku.quizz.entities.Theme;
 import lt.ku.quizz.entities.User;
 import lt.ku.quizz.repositories.AnswerRepository;
 import lt.ku.quizz.repositories.QuestionRepository;
@@ -27,6 +28,7 @@ import lt.ku.quizz.services.AnswerService;
 import lt.ku.quizz.services.LanguageService;
 import lt.ku.quizz.services.QuestionService;
 import lt.ku.quizz.services.QuizzService;
+import lt.ku.quizz.services.ThemeService;
 import lt.ku.quizz.services.UserService;
 
 @Controller
@@ -48,6 +50,9 @@ public class QuizzController {
 	@Autowired 
 	LanguageService languageService;
 	
+	@Autowired 
+	ThemeService themeService;
+	
 	@Autowired
 	QuestionRepository questionRepository;
 	
@@ -63,6 +68,7 @@ public class QuizzController {
 		model.addAttribute("users", userService.getUsers());
 		model.addAttribute("questions", questionService.getQuestions());
 		model.addAttribute("languages", languageService.getLanguages());
+		model.addAttribute("themes", themeService.getThemes());
 		return "quizz_list";
 	}
 	
@@ -70,12 +76,14 @@ public class QuizzController {
 	public String quizzNew(Model model, Integer id) {
     	model.addAttribute("users", userService.getUsers());
 		model.addAttribute("languages", languageService.getLanguages());
+		model.addAttribute("themes", themeService.getThemes());
 		return "quizz_new";
 	}
 	
 	@PostMapping("/new")
-	public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("user") User user) {
-		Quizz q = new Quizz(user, name, language);
+	public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("user") User user,
+			@RequestParam("theme") Theme theme) {
+		Quizz q = new Quizz(user, name, language, theme);
 		System.out.println("quizz kiekis: " + quizzService.getQuizzes().size());
 		quizzRepository.save(q);
 		
@@ -106,6 +114,7 @@ public class QuizzController {
 	public String answerNew(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("questions", questionService.getQuestions());
 		model.addAttribute("question", questionService.getQuestion(id));
+		model.addAttribute("themes", themeService.getThemes());
 		
 	//	model.addAttribute("question", questionService.getQuestion(question.getId()));
 		//model.addAttribute("lastQquestion", questionService.getQuestion(quizzService.getQuizzes().size()-1));
@@ -131,6 +140,7 @@ public class QuizzController {
 		model.addAttribute("questions", questionService.getQuestions());
 		model.addAttribute("answers", answerService.getAnswers());
 		model.addAttribute("languages", languageService.getLanguages());
+		model.addAttribute("themes", themeService.getThemes());
 		return "quizz_update";
 	}
 	

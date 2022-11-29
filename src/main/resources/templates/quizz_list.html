@@ -8,24 +8,24 @@
 </head>
 <body>
 	<div th:insert="fragments/navigation.html :: nav"></div>
-	<div class="container">
+	<div class="container mt-3">
 		<a href="/quizz/new" class="btn btn-success">Pridėti naują klausimyną</a>
 		<div class="row">
-			<div class="col-md-3 mt-5">
+			<div class="col-md-12 mt-3" style="column-count:3">
 				<div th:each="quizz:${quizzes}">
 					<!--  Klausimynas: <span th:text="${quizz.name}"></span>
 					-->
 					<div class="card">					
-					<div class="card-header" th:text=${quizz.name}></div>
-					<div class="card-body">
-						Kalba: <span th:text="${quizz.language.language}"></span> <br>
-						Kurejas: <span th:text="${quizz.user.name}"></span> <br>
-						
-						<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Zaisti</a>
+						<div class="card-header" th:text=${quizz.name}></div>
+						<div class="card-body">
+							Kalba: <span th:text="${quizz.language.language}"></span> <br>
+							Kurejas: <span th:text="${quizz.user.username}"></span> <br>
+							Tema: <span th:text="${quizz.theme.theme}"></span> <br>
+							<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Žaisti</a>
 			
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 			
 		</div>

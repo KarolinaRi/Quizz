@@ -26,7 +26,7 @@ public class Quizz {
 	@JoinColumn(name="kurejo_id")
 	private User user;
 	
-	@Column
+	@Column(length = 100)
 	private String name;
 	
 	@OneToMany(mappedBy = "quizz")
@@ -35,16 +35,21 @@ public class Quizz {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="language_id")
 	private Language language;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="theme_id")
+	private Theme theme;
 
 	public Quizz() {
 		super();
 	}
 
-	public Quizz(User user, String name, Language language) {
+	public Quizz(User user, String name, Language language, Theme theme) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.language = language;
+		this.theme = theme;
 	}
 
 	public Quizz(User user, String name, List<Question> questions, Language language) {
@@ -93,5 +98,13 @@ public class Quizz {
 
 	public void setLanguage(Language language) {
 		this.language = language;
+	}
+
+	public Theme getTheme() {
+		return theme;
+	}
+
+	public void setTheme(Theme theme) {
+		this.theme = theme;
 	}
 }

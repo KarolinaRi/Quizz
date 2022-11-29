@@ -36,14 +36,21 @@
 								</select>
 							</div> -->
 							<div class="mb-3">
+								<label class="form-label">Kalba</label>
+								<select class="form-control" name="theme">
+									<option ></option>
+									<option th:each="theme: ${themes}" th:value="${theme.id}" th:text="${theme.theme}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
 								<label class="form-label">Klausimai</label>
 								<ol type="1">
 									<li th:each="question: ${quizz.questions}">
-										<input type="hidden" th:value="*{question.id}">
-										<input type="text" th:value="*{question.question}">
+										<!--  <input type="hidden" th:value="*{question.id}">-->
+										<input type="text" th:value="${question.question}">
 										<ol type="a">
 											<li th:each="answer: ${question.answers}">
-												<input type="text" th:value="*{answer.answer}">
+												<input type="text" th:value="${answer.answer}">
 											</li>
 										</ol>
 									</li>

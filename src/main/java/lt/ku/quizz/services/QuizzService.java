@@ -1,5 +1,6 @@
 package lt.ku.quizz.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,17 @@ public class QuizzService {
 	
 	public Quizz getQuizz(Integer id) {
 		return quizzRepository.getById(id);
+	}
+	
+	public List<Quizz> getQuizzesByUsername(String username){
+		List<Quizz> allQuizzes = getQuizzes();
+		List<Quizz> myQuizzes = new ArrayList<Quizz> ();
+		for (Quizz quizz : allQuizzes) {
+			if(quizz.getUser().getUsername().equals(username)) {
+				myQuizzes.add(quizz);
+			}
+		}
+		return myQuizzes;
 	}
 	
 	public Quizz addQuizz(Quizz quizz) {

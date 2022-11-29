@@ -10,41 +10,48 @@
 	<div class="container">
 		<h1 style="text-align:center">Mano paskyra</h1>
 		<div class="row">
-			<div class="col-md-12 mt-5">
-				<div class="card">
-					<div class="card-header">Mano duomenys</div>
-					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-				    <div sec:authorize="isAuthenticated()">
-      					Prisijungimo vardas: <span sec:authentication="name"></span>
-      					
+			<div class="col-md-12 mt-3">
+				<div sec:authorize="isAuthenticated()">
+					<div class="card">
+						<div class="card-header">Mano duomenys</div>
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">      				
+      				    <p>Vardas: <span th:text="${user.name}"></span></p>
+      				    <p>Pavarde: <span th:text="${user.surname}"></span></p>
+      				    <p>El. pastas: <span th:text="${user.email}"></span></p>
+      				    <p>Prisijungimo vardas: <span th:text="${user.username}"></span></p>
+      				    
+      				    <a th:href="'/user/update/'+${user.id}" class="btn btn-success">Redaguoti</a>
       				</div>
-      				<!-- Vardas: <span th:text="{username}"></span> -->
-      				
-      			</div>	
-      			<div class="card">
-      				<div class="card-header">Mano klausimynai</div>
-      				<div class="card-body">
-          				<table class="table">
-						  <tr>
-						  	<th>Pavadinimas</th>
-						  	<th>Kalba</th>
-						  	<th>Veiksmai</th>
-						  </tr>
-						  
-						  <tr th:each="quizz: ${quizzes}">
-						  	<td th:text="${quizz.name}"></td>
-						   <td th:text="${quizz.language.language}"></td>
-						  
-						  	<td style="width: 200px;">
-						  		<a th:href="'/quizz/update/'+${quizz.id}" class="btn btn-success">Redaguoti</a>
-						  		<a th:href="'/quizz/delete/'+${quizz.id}" class="btn btn-danger">Ištrinti</a>
-						  		<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Zaisti</a>
-						  	</td>
-						  
-						  </tr>
-						
-						</table>
-				</div>
+	      			<div class="card mt-3">
+    	  				<div class="card-header">Mano klausimynai</div>
+	      				<div class="card-body">
+    	   					<table class="table">
+							  <tr>
+							  	<th>Pavadinimas</th>
+							  	<th>Kalba</th>
+							  	<th>Tema</th>
+						  		<th>Veiksmai</th>
+							  </tr>
+							  
+							  <tr th:each="quizz: ${quizzes}">
+							  	   <td th:text="${quizz.name}"></td>
+								   <td th:text="${quizz.language.language}"></td>
+								   <td th:text="${quizz.theme.theme}"></td>
+								   
+								   <td style="width: 200px;">
+								  		<a th:href="'/quizz/update/'+${quizz.id}" class="btn btn-success">Redaguoti</a>
+								  		<a th:href="'/quizz/delete/'+${quizz.id}" class="btn btn-danger">Ištrinti</a>
+							  			<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Žaisti</a>
+							  		</td>
+							  </tr>
+							</table>
+						</div>
+					</div>
+				</div>				
+				<div sec:authorize="!isAuthenticated()">
+					Prisijunkite ar prisiregistruokite, kad galetumete peržiureti savo profilį
+					<a href="/login" class="btn btn-primary">Prisijungti</a>
+					<a href="/user/new" class="btn btn-primary">Registracija</a>
 				</div>
 			</div>
 		</div>
