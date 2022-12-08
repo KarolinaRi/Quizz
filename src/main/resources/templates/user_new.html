@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
 <title>Klausimynas</title>
@@ -52,10 +52,13 @@
 								<label class="form-label">Slaptažodis</label>
 								<input type="password" class="form-control" name="password">
 							</div>
-							<div class="mb-3">
-								<label class="form-label">Rolė</label>
-								<input type="text" class="form-control" name="type">
+							<div sec:authorize='isAuthenticated()'> 
+								<div class="mb-3">
+									<label class="form-label">Rolė</label>
+									<input type="text" class="form-control" name="type">
+								</div>
 							</div>
+							
 							<button type="submit" class="btn btn-success">Pridėti</button>
 						</form>
 					</div>

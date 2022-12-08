@@ -83,10 +83,4 @@ public class UserController {
 		userService.deleteUser(id);
 		return "redirect:/user/";
 	}
-	
-//	@RequestMapping(value = "/username", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String currentUserName(Authentication authentication) {
-//	     return authentication.getName();
-//	}
 }

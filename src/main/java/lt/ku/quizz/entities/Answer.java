@@ -10,10 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "answer")
+@Where(clause="is_deleted=0")
 public class Answer {
 
 	@Id
@@ -30,16 +32,20 @@ public class Answer {
 	
 	@Column(nullable = false)
 	private Boolean correct = false;
+	
+	@Column(nullable=false, name="is_deleted")
+	private Boolean deleted = false;
 
 	public Answer() {
 		super();
 	}
 
-	public Answer(Question question, @Length(min = 3, max = 100) String atsakymas, Boolean correct) {
+	public Answer(Question question, @Length(min = 3, max = 100) String atsakymas, Boolean correct, Boolean deleted) {
 		super();
 		this.question = question;
 		this.answer = atsakymas;
 		this.correct = correct;
+		this.deleted = deleted;
 	}
 
 	public Integer getId() {
@@ -74,4 +80,12 @@ public class Answer {
 		this.correct = correct;
 	}
 
+	public Boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+	
 }

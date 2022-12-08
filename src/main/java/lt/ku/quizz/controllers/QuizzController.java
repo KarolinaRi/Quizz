@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import lt.ku.quizz.entities.User;
 import lt.ku.quizz.repositories.AnswerRepository;
 import lt.ku.quizz.repositories.QuestionRepository;
 import lt.ku.quizz.repositories.QuizzRepository;
+import lt.ku.quizz.repositories.UserRepository;
 import lt.ku.quizz.services.AnswerService;
 import lt.ku.quizz.services.LanguageService;
 import lt.ku.quizz.services.QuestionService;
@@ -62,6 +65,9 @@ public class QuizzController {
 	@Autowired
 	AnswerRepository answerRepository;
 	
+	@Autowired
+	UserRepository userRepository; 
+	
 	@GetMapping("/")  
 	public String quizzList(Model model) {
 		model.addAttribute("quizzes", quizzService.getQuizzes());
@@ -81,11 +87,15 @@ public class QuizzController {
 	}
 	
 	@PostMapping("/new")
-	public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("user") User user,
-			@RequestParam("theme") Theme theme) {
-		Quizz q = new Quizz(user, name, language, theme);
-		System.out.println("quizz kiekis: " + quizzService.getQuizzes().size());
-		quizzRepository.save(q);
+	public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("theme") Theme theme) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails) {
+			String username = ((UserDetails)principal).getUsername();
+			User user = userRepository.findByUsername(username);
+			Quizz q = new Quizz(user, name, language, theme, false);
+			quizzRepository.save(q);
+		}
 		
 		return "redirect:/quizz/new/question/";
 	}
@@ -99,37 +109,29 @@ public class QuizzController {
 	}
 	
 	@PostMapping("/new/question")
-	public String addQuestion(@RequestParam("question") String question, @RequestParam("quizz") Quizz quizz, @RequestParam("type") String type,
+	public String addQuestion(@RequestParam("question") String question, @RequestParam("type") String type,
 			@RequestParam("answerQuantity") Integer answerQuantity, Model model) {
-		Question q = new Question(quizz, question, type, answerQuantity);
-		Integer id = q.getId();
-		System.out.println(id);
-		model.addAttribute("id", id);
-		
+	    Quizz quizz = quizzService.getQuizz(quizzService.getQuizzes().size());
+		Question q = new Question(quizz, question, type, answerQuantity, false);
+		System.out.println(quizz.getId());
+
 		questionRepository.save(q);
-		return "redirect:/quizz/new/question/{id}";
+		return "redirect:/quizz/new/question/answer";
 	}
 
-	@GetMapping("/new/question/{id}")
-	public String answerNew(@PathVariable("id") Integer id, Model model) {
+	@GetMapping("/new/question/answer")
+	public String answerNew(Model model) {
 		model.addAttribute("questions", questionService.getQuestions());
-		model.addAttribute("question", questionService.getQuestion(id));
+		model.addAttribute("question", questionService.getQuestion(quizzService.getQuizzes().size()));
 		model.addAttribute("themes", themeService.getThemes());
-		
-	//	model.addAttribute("question", questionService.getQuestion(question.getId()));
-		//model.addAttribute("lastQquestion", questionService.getQuestion(quizzService.getQuizzes().size()-1));
-		
 		return "answer_new";
 	}
 	
-	@PostMapping("/new/question/{id}")
-	public String addAnswer(@PathVariable("id") Integer id, List<Answer> answers) {
-		Question question = questionService.getQuestion(id);
-		for(int i = 0; i < question.getAnswerQuantity(); i++) {
-			Answer a = new Answer();
-			answers.add(a);
-			answerRepository.save(a);
-		}
+	@PostMapping("/new/question/answer")
+	public String addAnswer(@RequestParam("answer") String answer, @RequestParam("correct") Boolean correct) {
+		Question question = questionService.getQuestion(quizzService.getQuizzes().size());
+		Answer a = new Answer(question, answer, correct, false);
+		answerRepository.save(a);
 		return "redirect:/quizz/new/question/";
 	}
 	

@@ -46,16 +46,13 @@ public class QuizzService {
 		return quizzRepository.save(quizz);
 	}
 	
-//	public Question addQuestion(Question question) {
-//		return questionRepository.save(question);
-//	}
-	
 	public Quizz updateQuizz(Quizz quizz) {
 		Quizz old=this.getQuizz(quizz.getId());
 		old.setName(quizz.getName());
 		old.setUser(old.getUser());
 		old.setQuestions(quizz.getQuestions());
 		old.setLanguage(quizz.getLanguage());
+		old.setDeleted(quizz.isDeleted());
 		quizzRepository.save(old);
 		
 		return old;

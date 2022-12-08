@@ -21,16 +21,11 @@ public class UserService implements UserDetailsService{
 	public List<User> getUsers(){
 		return userRepository.findAll();
 	}
-	
-	//public User getByUsername()
-	
+		
 	public User getUser(Integer id) {
 		return userRepository.getById(id);
 	}
 	
-	/*public User addUser(User user) {
-		return userRepository.save(user);
-	}*/
 	
 	public User updateUser(User user) {
 		User old=this.getUser(user.getId());

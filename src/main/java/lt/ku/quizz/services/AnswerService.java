@@ -31,6 +31,7 @@ public class AnswerService {
 		old.setQuestion(answer.getQuestion());
 		old.setAnswer(answer.getAnswer());
 		old.setCorrect(answer.isCorrect());
+		old.setDeleted(answer.isDeleted());
 		answerRepository.save(old);
 		return old;
 	}

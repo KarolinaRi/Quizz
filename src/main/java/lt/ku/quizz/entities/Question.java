@@ -13,10 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "question")
+@Where(clause="is_deleted=0")
 public class Question {
 	
 	@Id
@@ -41,41 +43,35 @@ public class Question {
 	
 	private Integer answerQuantity;
 	
-	//private Integer answerCount;
-	
+	@Column(nullable=false, name="is_deleted")
+	private Boolean deleted = false;
+		
 	public Question() {
 		super();
 	}
 
 	public Question(Quizz quizz,
 			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question,
-			List<Answer> answers, String type, Integer answerQuantity) {
+			List<Answer> answers, String type, Integer answerQuantity, Boolean deleted) {
 		super();
 		this.quizz = quizz;
 		this.question = question;
 		this.answers = answers;
 		this.type = type;
 		this.answerQuantity = answerQuantity;
+		this.deleted = deleted;
 	}
 	
 	public Question(Quizz quizz,
-			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question, String type, Integer answerQuantity) {
+			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question, String type, Integer answerQuantity,
+			Boolean deleted) {
 		super();
 		this.quizz = quizz;
 		this.question = question;
 		this.type = type;
 		this.answerQuantity = answerQuantity;
+		this.deleted = deleted;
 	}
-
-//	public Question(Quizz quizz,
-//		@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question,
-//		List<String> tipas, List<Answer> answers) {
-//	super();
-//	this.quizz = quizz;
-//	this.question = question;
-//	this.tipas = tipas;
-//	this.answers = answers;
-//	}
 
 	public Integer getId() {
 		return id;
@@ -123,6 +119,14 @@ public class Question {
 
 	public void setAnswerQuantity(Integer answerQuantity) {
 		this.answerQuantity = answerQuantity;
+	}
+
+	public Boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 }

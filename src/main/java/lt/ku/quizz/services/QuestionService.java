@@ -39,6 +39,7 @@ public class QuestionService {
 		old.setQuestion(question.getQuestion());
 		old.setAnswers(question.getAnswers());
 		old.setType(question.getType());
+		old.setDeleted(question.isDeleted());
 		questionRepository.save(old);
 		return old;
 	}

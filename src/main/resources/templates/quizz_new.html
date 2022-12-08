@@ -41,53 +41,13 @@
 								<label class="form-label">Tema</label>
 								<select class="form-control" name="theme">
 									<option></option>
-									<option th:each="theme: ${theme}" th:value="${theme.id}" th:text="${theme.theme}"></option>
+									<option th:each="theme: ${themes}" th:value="${theme.id}" th:text="${theme.theme}"></option>
 								</select>
 								<!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
 									<ul>
 										<li th:each="klaida:${#fields.errors('name')}" th:text="${klaida}"></li>
 									</ul>
 								</div> -->
-							</div>
-							<div class="mb-3">
-								<label class="form-label">Naudotojas</label>
-								<select class="form-control" name="user">
-									<option></option>
-									<option th:each="user: ${users}" th:value="${user.id}" th:text="${user.name + ' ' + user.surname}"></option>
-								</select>
-								<!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
-									<ul>
-										<li th:each="klaida:${#fields.errors('name')}" th:text="${klaida}"></li>
-									</ul>
-								</div> -->
-							</div>
-							<div class="mb-3">
-								<label class="form-label" >Klausimai</label>
-									<div class="mb-4">
-										<fieldset>
-											<table>
-												<thead>
-													<tr>
-														<th>Klausimai</th>
-														<th>Atsakymai</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td th:each="question:${questions}">
-															<span th:text=${question.question}></span>
-														</td>
-														<td th:each="question: ${questions}">
-															<span th:text="question.answers.answer"></span>
-														</td>
-														
-														
-													</tr>
-												</tbody>
-											</table>
-										</fieldset>
-										<a class="btn btn-secondary" href="/quizz/new/question/">Prideti klausima</a>						
-									</div>
 							</div>
 							
 							<button type="submit" class="btn btn-success">Pridėti</button>

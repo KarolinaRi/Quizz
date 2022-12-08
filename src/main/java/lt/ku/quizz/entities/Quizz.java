@@ -14,8 +14,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "quizz")
+@Where(clause="is_deleted=0")
 public class Quizz {
 	
 	@Id
@@ -39,25 +42,30 @@ public class Quizz {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="theme_id")
 	private Theme theme;
+	
+	@Column(nullable = false, name ="is_deleted")
+	private Boolean deleted = false;
 
 	public Quizz() {
 		super();
 	}
 
-	public Quizz(User user, String name, Language language, Theme theme) {
+	public Quizz(User user, String name, Language language, Theme theme, Boolean deleted) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.language = language;
 		this.theme = theme;
+		this.deleted = deleted;
 	}
 
-	public Quizz(User user, String name, List<Question> questions, Language language) {
+	public Quizz(User user, String name, List<Question> questions, Language language, Boolean deleted) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.questions = questions;
 		this.language = language;
+		this.deleted = deleted;
 	}
 		
 	public Integer getId() {
@@ -107,4 +115,14 @@ public class Quizz {
 	public void setTheme(Theme theme) {
 		this.theme = theme;
 	}
+
+	public Boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+	
+	
 }
