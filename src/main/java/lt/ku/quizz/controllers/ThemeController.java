@@ -39,7 +39,7 @@ public class ThemeController {
 			return "theme_new";
 		}
 		themeService.addTheme(theme);
-		model.addAttribute("user", themeService.getThemes());
+		model.addAttribute("themes", themeService.getThemes());
 		return "redirect:/theme/";
 	}
 	

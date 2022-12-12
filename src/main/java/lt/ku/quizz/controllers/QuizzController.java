@@ -80,7 +80,7 @@ public class QuizzController {
 	
 	@GetMapping("/new")  
 	public String quizzNew(Model model, Integer id) {
-    	model.addAttribute("users", userService.getUsers());
+    	//model.addAttribute("users", userService.getUsers());
 		model.addAttribute("languages", languageService.getLanguages());
 		model.addAttribute("themes", themeService.getThemes());
 		return "quizz_new";
@@ -132,7 +132,7 @@ public class QuizzController {
 		Question question = questionService.getQuestion(quizzService.getQuizzes().size());
 		Answer a = new Answer(question, answer, correct, false);
 		answerRepository.save(a);
-		return "redirect:/quizz/new/question/";
+		return "redirect:/quizz/new/question";
 	}
 	
 	@GetMapping("/update/{id}")

@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService{
 		old.setSurname(user.getSurname());
 		old.setEmail(user.getEmail());
 		old.setUsername(user.getUsername());
-		old.setPassword(user.getPassword());
+		old.setPassword(old.getPassword());
 		old.setRole(user.getRole());
 		userRepository.save(old);
 		return old;

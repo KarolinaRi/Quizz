@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 @Table(name = "theme")
 public class Theme {
@@ -19,6 +21,7 @@ public class Theme {
 	private Integer id;
 	
 	@Column(length = 64)
+	@Length(min=3, max=64, message="Temos pavadinimas turi buti sudarytas nuo 3 iki 64 simboliu")
 	private String theme;
 	
 	@OneToMany(mappedBy = "theme")
@@ -28,11 +31,12 @@ public class Theme {
 		super();
 	}
 
-	public Theme(String theme) {
+	public Theme(
+			@Length(min = 3, max = 64, message = "Temos pavadinimas turi buti sudarytas nuo 3 iki 64 simboliu") String theme) {
 		super();
 		this.theme = theme;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Klausimynas</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+<link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 	<div th:insert="fragments/navigation.html :: nav"></div>
@@ -19,7 +19,7 @@
 						<div class="card-header" th:text=${quizz.name}></div>
 						<div class="card-body">
 							Kalba: <span th:text="${quizz.language.language}"></span> <br>
-							Kurejas: <span th:text="${quizz.user.username}"></span> <br>
+							Kūrejas: <span th:text="${quizz.user.username}"></span> <br>
 							Tema: <span th:text="${quizz.theme.theme}"></span> <br>
 							<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Žaisti</a>
 			
