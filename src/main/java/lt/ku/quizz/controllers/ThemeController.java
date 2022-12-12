@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lt.ku.quizz.entities.Theme;
 import lt.ku.quizz.services.ThemeService;
@@ -34,11 +35,9 @@ public class ThemeController {
 	}
 	
 	@PostMapping("/new")
-	public String addTheme(Model model, @Valid @ModelAttribute Theme theme, BindingResult themeResult) {
-		if(themeResult.hasErrors()) {
-			return "theme_new";
-		}
-		themeService.addTheme(theme);
+	public String addTheme(Model model, @RequestParam("theme") String theme) {
+		Theme t = new Theme(theme);
+		themeService.addTheme(t);
 		model.addAttribute("themes", themeService.getThemes());
 		return "redirect:/theme/";
 	}

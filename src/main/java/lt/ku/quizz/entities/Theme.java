@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "theme")

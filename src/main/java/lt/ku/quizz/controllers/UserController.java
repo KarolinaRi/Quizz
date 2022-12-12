@@ -1,6 +1,8 @@
 package lt.ku.quizz.controllers;
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lt.ku.quizz.entities.Theme;
 import lt.ku.quizz.entities.User;
 import lt.ku.quizz.services.QuizzService;
+import lt.ku.quizz.services.ThemeService;
 import lt.ku.quizz.services.UserService;
 
 @Controller
@@ -29,6 +33,9 @@ public class UserController {
 	
 	@Autowired
 	QuizzService quizzService;
+	
+	@Autowired
+	ThemeService themeService;
 	
 	@GetMapping("/")  
 	public String userInfo(Model model) {
@@ -83,4 +90,19 @@ public class UserController {
 		userService.deleteUser(id);
 		return "redirect:/user/";
 	}
+	
+	@GetMapping("/theme")
+	public List<Theme> themes() {
+		//model.addAttribute("themes", themeService.getThemes());
+		List<Theme> themes = themeService.getThemes();
+		return themes;
+	}
+	
+	@PostMapping("/theme")
+	public String getThemes() {
+		
+		return "redirect:/themes";
+	}
+	
+	
 }

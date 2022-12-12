@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.services.LanguageService;
@@ -34,11 +35,9 @@ public class LanguageController {
 	}
 	
 	@PostMapping("/new")
-	public String addLanguage(Model model, @Valid @ModelAttribute  Language language, BindingResult languageResult) {
-		if(languageResult.hasErrors()) {
-			return "language_new";
-		}
-		languageService.addLanguage(language);
+	public String addLanguage(Model model, @RequestParam("language") String language) {
+		Language l = new Language(language);
+		languageService.addLanguage(l);
 		model.addAttribute("language", languageService.getLanguages());
 		return "redirect:/language/";
 	}
