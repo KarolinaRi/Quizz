@@ -7,10 +7,13 @@ body{
 }
 
 #imgCol{
-	width:100%;
+	/*width:100%;
 	height:600px;
-	padding:20px;
+	padding:20px;*/
+	max-width:100%;
+	height:auto;
 }
+
 .t{
 	text-align:cented; 
 	justify-content:center;

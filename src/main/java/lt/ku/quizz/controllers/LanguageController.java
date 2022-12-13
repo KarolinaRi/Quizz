@@ -49,7 +49,9 @@ public class LanguageController {
 	}
 	
 	@PostMapping("/update/{id}")
-	public String languageUpdate(@PathVariable("id") Integer id, @ModelAttribute Language l) {
+	public String languageUpdate(@PathVariable("id") Integer id, @RequestParam("language") String language) {
+		Language l = languageService.getLanguage(id);
+		l.setLanguage(language);
 		languageService.updateLanguage(l);
 		return "redirect:/language/";
 	}

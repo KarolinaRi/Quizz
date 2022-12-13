@@ -98,11 +98,9 @@ public class UserController {
 		return themes;
 	}
 	
-	@PostMapping("/theme")
+	@PostMapping("/themes")
 	public String getThemes() {
 		
-		return "redirect:/themes";
+		return "redirect:/user/theme";
 	}
-	
-	
 }

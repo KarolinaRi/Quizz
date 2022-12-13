@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lt.ku.quizz.entities.Theme;
+import lt.ku.quizz.repositories.ThemeRepository;
 import lt.ku.quizz.services.ThemeService;
 
 @Controller
-@RequestMapping("/theme")
+@RequestMapping("/user/theme")
 public class ThemeController {
 	
 	@Autowired
 	ThemeService themeService;
+	
+	@Autowired
+	ThemeRepository themeRepository;
 	
 	@GetMapping("/")  
 	public String themeList(Model model) {
@@ -49,7 +53,9 @@ public class ThemeController {
 	}
 	
 	@PostMapping("/update/{id}")
-	public String themeUpdate(@PathVariable("id") Integer id, @ModelAttribute Theme t) {
+	public String themeUpdate(@PathVariable("id") Integer id,  @RequestParam("theme") String theme) {
+		Theme t= themeService.getTheme(id);
+		t.setTheme(theme);
 		themeService.updateTheme(t);
 		return "redirect:/theme/";
 	}
