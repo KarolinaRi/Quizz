@@ -60,6 +60,7 @@ public class UserController {
 	
 	@GetMapping("/new")  
 	public String userNew(Model model) {
+		model.addAttribute("user", new User());
 		return "user_new";
 	}
 	

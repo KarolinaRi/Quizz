@@ -4,12 +4,14 @@ package lt.ku.quizz.controllers;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,22 +81,31 @@ public class QuizzController {
 	}
 	
 	@GetMapping("/new")  
-	public String quizzNew(Model model, Integer id) {
+	public String quizzNew(Model model) {
     	//model.addAttribute("users", userService.getUsers());
 		model.addAttribute("languages", languageService.getLanguages());
 		model.addAttribute("themes", themeService.getThemes());
+		model.addAttribute("quizz", new Quizz());
 		return "quizz_new";
 	}
 	
 	@PostMapping("/new")
-	public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("theme") Theme theme) {
+	//public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("theme") Theme theme) {
+	public String AddQuizz(@Valid @ModelAttribute Quizz quizz, BindingResult quizzResult) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
+			if(quizzResult.hasErrors()) {
+				return "quizz_new";
+			}
+			
+
 			String username = ((UserDetails)principal).getUsername();
 			User user = userRepository.findByUsername(username);
-			Quizz q = new Quizz(user, name, language, theme, false);
-			quizzRepository.save(q);
+			quizz.setUser(user);
+			quizzService.addQuizz(quizz);
+//			Quizz q = new Quizz(user, name, language, theme, false);
+//			quizzRepository.save(q);
 		}
 		
 		return "redirect:/quizz/new/question/";
@@ -103,19 +114,25 @@ public class QuizzController {
 	
 	@GetMapping("/new/question")
 	public String questionNew(Model model) {
-		model.addAttribute("quizzes", quizzService.getQuizzes());
-		
+		//model.addAttribute("quizzes", quizzService.getQuizzes());
+		model.addAttribute("question", new Question());
 		return "question_new";
 	}
 	
 	@PostMapping("/new/question")
-	public String addQuestion(@RequestParam("question") String question, @RequestParam("type") String type,
-			@RequestParam("answerQuantity") Integer answerQuantity, Model model) {
-	    Quizz quizz = quizzService.getQuizz(quizzService.getQuizzes().size());
-		Question q = new Question(quizz, question, type, answerQuantity, false);
-		System.out.println(quizz.getId());
-
-		questionRepository.save(q);
+//	public String addQuestion(@RequestParam("question") String question, @RequestParam("type") String type,
+//			@RequestParam("answerQuantity") Integer answerQuantity, Model model) {
+//		int id = quizzService.getQuizzes().size();
+//	    Quizz quizz = quizzService.getQuizz(id);
+//		Question q = new Question(quizz, question, type, answerQuantity, false);
+//		System.out.println(quizz.getId());
+//
+//		questionRepository.save(q);
+	public String addQuestion(@Valid @ModelAttribute Question question, BindingResult questionResult) {
+		if(questionResult.hasErrors()) {
+			return "question_new";
+		}
+		questionService.addQuestion(question);
 		return "redirect:/quizz/new/question/answer";
 	}
 

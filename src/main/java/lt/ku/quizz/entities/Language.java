@@ -25,7 +25,7 @@ public class Language {
 	private Integer id;
 	
 	@Column(length = 20)
-	@Length(min = 3, max = 20)
+	@Length(min = 3, max = 20, message ="Kalbos pavadinimas turi būti sudarytas iš 3 - 20 simbolių")
 	private String language;
 	
 	@OneToMany(mappedBy = "language")
@@ -35,7 +35,7 @@ public class Language {
 		super();
 	}
 
-	public Language(@Length(min = 3, max = 20) String language) {
+	public Language(@Length(min = 3, max = 20, message ="Kalbos pavadinimas turi būti sudarytas iš 3 - 20 simbolių") String language) {
 		super();
 		this.language = language;
 	}

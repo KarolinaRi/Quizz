@@ -37,7 +37,6 @@ public class Question {
 	@OneToMany(mappedBy = "question")
 	private List<Answer> answers;
 
-	//private enum types {TM, pasirenkami};
 	@Column(nullable = false)
 	private String type; // = {"True/False", "Pasirenkami"};
 	
@@ -50,17 +49,17 @@ public class Question {
 		super();
 	}
 
-	public Question(Quizz quizz,
-			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question,
-			List<Answer> answers, String type, Integer answerQuantity, Boolean deleted) {
-		super();
-		this.quizz = quizz;
-		this.question = question;
-		this.answers = answers;
-		this.type = type;
-		this.answerQuantity = answerQuantity;
-		this.deleted = deleted;
-	}
+//	public Question(Quizz quizz,
+//			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question,
+//			List<Answer> answers, String type, Integer answerQuantity, Boolean deleted) {
+//		super();
+//		this.quizz = quizz;
+//		this.question = question;
+//		this.answers = answers;
+//		this.type = type;
+//		this.answerQuantity = answerQuantity;
+//		this.deleted = deleted;
+//	}
 	
 	public Question(Quizz quizz,
 			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question, String type, Integer answerQuantity,

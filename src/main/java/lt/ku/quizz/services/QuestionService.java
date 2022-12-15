@@ -17,6 +17,9 @@ public class QuestionService {
 	@Autowired
 	QuestionRepository questionRepository;
 	
+	@Autowired
+	QuizzService quizzService;
+	
 	public List<Question> getQuestions(){
 		return questionRepository.findAll();
 	}
@@ -30,6 +33,7 @@ public class QuestionService {
 	}
 	
 	public Question addQuestion(Question question) {
+		question.setQuizz(quizzService.getQuizz(quizzService.getQuizzes().size()));
 		return questionRepository.save(question);
 	}
 	

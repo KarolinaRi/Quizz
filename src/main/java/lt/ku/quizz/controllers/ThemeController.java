@@ -35,14 +35,19 @@ public class ThemeController {
 	
 	@GetMapping("/new")  
 	public String themeNew(Model model) {
+		model.addAttribute("theme", new Theme());
 		return "theme_new";
 	}
 	
 	@PostMapping("/new")
-	public String addTheme(Model model, @RequestParam("theme") String theme) {
-		Theme t = new Theme(theme);
-		themeService.addTheme(t);
-		model.addAttribute("themes", themeService.getThemes());
+	public String addTheme(@Valid @ModelAttribute Theme theme, BindingResult themeResult) {
+		if(themeResult.hasErrors()) {
+			return "theme_new";
+		}
+		themeService.addTheme(theme);
+//		Theme t = new Theme(theme);
+//		themeService.addTheme(t);
+//		model.addAttribute("themes", themeService.getThemes());
 		return "redirect:/theme/";
 	}
 	

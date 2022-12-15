@@ -31,14 +31,16 @@ public class LanguageController {
 	
 	@GetMapping("/new")  
 	public String languageNew(Model model) {
+		model.addAttribute("language", new Language());
 		return "language_new";
 	}
 	
 	@PostMapping("/new")
-	public String addLanguage(Model model, @RequestParam("language") String language) {
-		Language l = new Language(language);
-		languageService.addLanguage(l);
-		model.addAttribute("language", languageService.getLanguages());
+	public String addLanguage(@Valid @ModelAttribute Language language, BindingResult languageResult) {
+		if(languageResult.hasErrors()) {
+			return "language_new";
+		}
+		languageService.addLanguage(language);
 		return "redirect:/language/";
 	}
 	

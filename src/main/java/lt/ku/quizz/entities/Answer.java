@@ -27,7 +27,7 @@ public class Answer {
 	private Question question;
 
 	@Column(length = 100)
-	@Length(min=3, max=100)
+	@Length(min=3, max=100, message="Atsakymas turi būti sudarytas iš 3 - 100 simbolių")
 	private String answer;
 	
 	@Column(nullable = false)
@@ -40,10 +40,12 @@ public class Answer {
 		super();
 	}
 
-	public Answer(Question question, @Length(min = 3, max = 100) String atsakymas, Boolean correct, Boolean deleted) {
+	public Answer(Question question,
+			@Length(min = 3, max = 100, message = "Atsakymas turi būti sudarytas iš 3 - 100 simbolių") String answer,
+			Boolean correct, Boolean deleted) {
 		super();
 		this.question = question;
-		this.answer = atsakymas;
+		this.answer = answer;
 		this.correct = correct;
 		this.deleted = deleted;
 	}

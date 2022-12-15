@@ -29,8 +29,8 @@ public class User implements UserDetails{
 	
 	@Column(nullable = false, length = 64, unique = true)
 //	@NotNull
-//	@UniqueElements(message="Toks naudotojo vardas jau užregistruotas")
-//	@Length(min=3, max=64, message)
+	//@UniqueElements(message="Toks naudotojo vardas jau užregistruotas")
+	@Length(min=3, max=64, message="Naudotojo vardas turi būti sudarytas iš 3 - 64 simbolių")
 	private String username;
 	
 	@Column(nullable = false, length = 255)
@@ -55,8 +55,8 @@ public class User implements UserDetails{
 	@Column(nullable = false)
 	private String role = "user";
 	
-	@OneToMany(mappedBy = "user")
-	List<Quizz> user_quizzes;
+//	@OneToMany(mappedBy = "user")
+//	List<Quizz> user_quizzes;
 	
 	//Sprestu klausimynu listas
 	
@@ -66,12 +66,13 @@ public class User implements UserDetails{
 		super();
 	}
 
-	public User(@NotNull @UniqueElements(message = "Toks naudotojo vardas jau užregistruotas") String username,
-			@NotNull @Length(min = 8, max = 64, message = "Slaptažodis turi būti sudarytas iš bent 8 simbolių") String password,
+
+	public User(
+			@Length(min = 3, max = 64, message = "Naudotojo vardas turi būti sudarytas iš 3 - 64 simbolių") String username,
+			@NotNull @Length(min = 8, max = 255, message = "Slaptažodis turi būti sudarytas iš bent 8 simbolių") String password,
 			@NotNull @Length(min = 3, max = 20, message = "Vardas turi buti sudarytas is 3 - 20 simbolių") String name,
 			@NotNull @Length(min = 3, max = 25, message = "Pavardė turi būti sudaryta is 3 - 25 simbolių") String surname,
-			@Email(message = "El. pašto adresas turi būti tvarkingas") @UniqueElements(message = "Toks el. pašto adresas jau užregistruotas") String email,
-			String role) {
+			@Email(message = "El. pašto adresas turi būti tvarkingas") String email, String role) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -81,21 +82,22 @@ public class User implements UserDetails{
 		this.role = role;
 	}
 
-	public User(@NotNull @UniqueElements(message = "Toks naudotojo vardas jau užregistruotas") String username,
-			@NotNull @Length(min = 8, max = 64, message = "Slaptažodis turi būti sudarytas iš bent 8 simbolių") String password,
-			@NotNull @Length(min = 3, max = 20, message = "Vardas turi buti sudarytas is 3 - 20 simbolių") String name,
-			@NotNull @Length(min = 3, max = 25, message = "Pavardė turi būti sudaryta is 3 - 25 simbolių") String surname,
-			@Email(message = "El. pašto adresas turi būti tvarkingas") @UniqueElements(message = "Toks el. pašto adresas jau užregistruotas") String email,
-			String role, List<Quizz> user_quizzes) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.role = role;
-		this.user_quizzes = user_quizzes;
-	}
+
+//	public User(@NotNull @UniqueElements(message = "Toks naudotojo vardas jau užregistruotas") String username,
+//			@NotNull @Length(min = 8, max = 64, message = "Slaptažodis turi būti sudarytas iš bent 8 simbolių") String password,
+//			@NotNull @Length(min = 3, max = 20, message = "Vardas turi buti sudarytas is 3 - 20 simbolių") String name,
+//			@NotNull @Length(min = 3, max = 25, message = "Pavardė turi būti sudaryta is 3 - 25 simbolių") String surname,
+//			@Email(message = "El. pašto adresas turi būti tvarkingas") @UniqueElements(message = "Toks el. pašto adresas jau užregistruotas") String email,
+//			String role, List<Quizz> user_quizzes) {
+//		super();
+//		this.username = username;
+//		this.password = password;
+//		this.name = name;
+//		this.surname = surname;
+//		this.email = email;
+//		this.role = role;
+//		this.user_quizzes = user_quizzes;
+//	}
 
 	public Integer getId() {
 		return id;

@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "quizz")
@@ -30,6 +32,7 @@ public class Quizz {
 	private User user;
 	
 	@Column(length = 100)
+	@Length(min=3, max=100, message="Klausimyno pavadinimas turi būti sudarytas iš 3 - 100 simbolių")
 	private String name;
 	
 	@OneToMany(mappedBy = "quizz")
@@ -50,7 +53,19 @@ public class Quizz {
 		super();
 	}
 
-	public Quizz(User user, String name, Language language, Theme theme, Boolean deleted) {
+//	public Quizz(User user, String name, Language language, Theme theme, Boolean deleted) {
+//		super();
+//		this.user = user;
+//		this.name = name;
+//		this.language = language;
+//		this.theme = theme;
+//		this.deleted = deleted;
+//	}
+//	
+
+	public Quizz(User user,
+			@Length(min = 3, max = 100, message = "Klausimyno pavadinimas turi būti sudarytas iš 3 - 100 simbolių") String name,
+			Language language, Theme theme, Boolean deleted) {
 		super();
 		this.user = user;
 		this.name = name;
@@ -59,14 +74,14 @@ public class Quizz {
 		this.deleted = deleted;
 	}
 
-	public Quizz(User user, String name, List<Question> questions, Language language, Boolean deleted) {
-		super();
-		this.user = user;
-		this.name = name;
-		this.questions = questions;
-		this.language = language;
-		this.deleted = deleted;
-	}
+//	public Quizz(User user, String name, List<Question> questions, Language language, Boolean deleted) {
+//		super();
+//		this.user = user;
+//		this.name = name;
+//		this.questions = questions;
+//		this.language = language;
+//		this.deleted = deleted;
+//	}
 		
 	public Integer getId() {
 		return id;
