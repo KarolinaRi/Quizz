@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.entities.Theme;
 import lt.ku.quizz.entities.User;
+import lt.ku.quizz.services.LanguageService;
 import lt.ku.quizz.services.QuizzService;
 import lt.ku.quizz.services.ThemeService;
 import lt.ku.quizz.services.UserService;
@@ -36,6 +38,9 @@ public class UserController {
 	
 	@Autowired
 	ThemeService themeService;
+	
+	@Autowired
+	LanguageService languageService;
 	
 	@GetMapping("/")  
 	public String userInfo(Model model) {
@@ -99,9 +104,22 @@ public class UserController {
 		return themes;
 	}
 	
-	@PostMapping("/themes")
+	@PostMapping("/theme")
 	public String getThemes() {
 		
 		return "redirect:/user/theme";
+	}
+	
+	@GetMapping("/language")
+	public List<Language> languages() {
+		//model.addAttribute("themes", themeService.getThemes());
+		List<Language> languages = languageService.getLanguages();
+		return languages;
+	}
+	
+	@PostMapping("/language")
+	public String getLanguages() {
+		
+		return "redirect:/user/language";
 	}
 }

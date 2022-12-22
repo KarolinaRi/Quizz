@@ -16,14 +16,14 @@
 				<div class="card">
 					<div class="card-header">Atnaujinti temą</div>
 					<div class="card-body">
-						<form th:action="'/theme/update/'+${theme.id}" method="post" th:object="${theme}">
+						<form th:action="'/user/theme/update/'+${theme.id}" method="post" th:object="${theme}">
 						    <input type="hidden" name="id" th:value="*{id}">
 							<div class="mb-3">
 								<label class="form-label">Tema</label>
 								<input type="text" class="form-control" name="theme" th:value="*{theme}"> 
 							</div>
 							<button type="submit" class="btn btn-success">Atnaujinti</button>
-							<a class="btn btn-primary" href="/theme/">Atgal į temų sąrašą</a>
+							<a class="btn btn-secondary" href="/user/theme/">Atgal į temų sąrašą</a>
 						</form>
 					
 					</div>

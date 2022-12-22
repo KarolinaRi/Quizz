@@ -30,31 +30,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		auth
 			.userDetailsService(this.userService)
 			.passwordEncoder(bc);
-		
-		
-		auth
-			.inMemoryAuthentication()
-				.withUser("gediminas").password(bc.encode("LabasRytas")).roles("admin", "user")
-				.and()
-				.withUser("jonas").password(bc.encode("LabasVakaras")).roles("user");
 			
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-
-		
 		http
 			.authorizeRequests()
-				.antMatchers("/user/").permitAll()
+				.antMatchers("/user").permitAll()
 				.antMatchers("/user/new").permitAll()
 				.antMatchers("/").permitAll()	
 				.antMatchers("/quizz/").permitAll()
 				.antMatchers("/quizz/play/").permitAll()
 				.antMatchers("/login*").permitAll()
-				.antMatchers("/language*").hasAnyRole("admin")
-				.antMatchers("/user/theme*").hasAnyRole("admin")
+				.antMatchers("/user/theme").hasAnyRole("admin")
+				.antMatchers("/user/language").hasAnyRole("admin")
 				.anyRequest().authenticated()
 		
 		.and()
@@ -72,20 +62,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/images/**", "/css/**");
     }
-
-	/*@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}*/
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-//    }
+	
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-
-    
-
 }

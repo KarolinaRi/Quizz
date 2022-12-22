@@ -9,8 +9,10 @@
 </head>
 <body>
 	<div th:insert="fragments/navigation.html :: nav"></div>
+	<h1>Kalbų sąrašas</h1>
 	<div class="container mt-3">
-		<a href="/language/new" class="btn btn-success">Pridėti naują kalbą</a>
+		<a href="/user/language/new" class="btn btn-success">Pridėti naują kalbą</a>
+		<a href="/user/" class="btn btn-secondary">Grįžti į profilio peržiūrą</a>
 		<div class="row">
 			<div class="col-md-12 mt-3">
 				<div class="card">	
@@ -26,8 +28,8 @@
 							  	<td th:text="${language.language}"></td>
 						  
 							  	<td style="width: 200px;">
-							  		<a th:href="'/language/update/'+${language.id}" class="btn btn-success">Redaguoti kalbą</a>
-									<a th:href="'/language/delete/'+${language.id}" class="btn btn-danger">Pašalinti kalbą</a>
+							  		<a th:href="'/user/language/update/'+${language.id}" class="btn btn-success">Redaguoti kalbą</a>
+									<a th:href="'/user/language/delete/'+${language.id}" class="btn btn-danger">Pašalinti kalbą</a>
 							  	</td>
 						  	</tr>
 						</table>

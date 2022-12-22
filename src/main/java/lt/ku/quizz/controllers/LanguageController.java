@@ -17,7 +17,7 @@ import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.services.LanguageService;
 
 @Controller
-@RequestMapping("/language")
+@RequestMapping("/user/language")
 public class LanguageController {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class LanguageController {
 			return "language_new";
 		}
 		languageService.addLanguage(language);
-		return "redirect:/language/";
+		return "redirect:/user/language/";
 	}
 	
 	@GetMapping("/update/{id}")
@@ -55,12 +55,12 @@ public class LanguageController {
 		Language l = languageService.getLanguage(id);
 		l.setLanguage(language);
 		languageService.updateLanguage(l);
-		return "redirect:/language/";
+		return "redirect:/user/language/";
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String themeDelete(@PathVariable("id") Integer id) {
 		languageService.deleteLanguage(id);
-		return "redirect:/language/";
+		return "redirect:/user/language/";
 	}
 }

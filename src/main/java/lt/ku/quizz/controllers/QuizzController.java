@@ -120,19 +120,20 @@ public class QuizzController {
 	}
 	
 	@PostMapping("/new/question")
-//	public String addQuestion(@RequestParam("question") String question, @RequestParam("type") String type,
-//			@RequestParam("answerQuantity") Integer answerQuantity, Model model) {
-//		int id = quizzService.getQuizzes().size();
-//	    Quizz quizz = quizzService.getQuizz(id);
-//		Question q = new Question(quizz, question, type, answerQuantity, false);
-//		System.out.println(quizz.getId());
-//
+	public String addQuestion(@RequestParam("question") String question, @RequestParam("type") String type,
+			@RequestParam("answerQuantity") Integer answerQuantity, Model model) {
+		int id = quizzService.getQuizzes().size();
+	    Quizz quizz = quizzService.getQuizz(id);
+		Question q = new Question(quizz, question, type, answerQuantity, false);
+		System.out.println(quizz.getId());
+
 //		questionRepository.save(q);
-	public String addQuestion(@Valid @ModelAttribute Question question, BindingResult questionResult) {
-		if(questionResult.hasErrors()) {
-			return "question_new";
-		}
-		questionService.addQuestion(question);
+//	public String addQuestion(@Valid @ModelAttribute Question question, BindingResult questionResult) {
+//		question.setQuizz(quizzService.getQuizz(quizzService.getQuizzes().size()));
+//		if(questionResult.hasErrors()) {
+//			return "question_new";
+//		}
+		questionService.addQuestion(q);
 		return "redirect:/quizz/new/question/answer";
 	}
 
@@ -146,9 +147,14 @@ public class QuizzController {
 	
 	@PostMapping("/new/question/answer")
 	public String addAnswer(@RequestParam("answer") String answer, @RequestParam("correct") Boolean correct) {
-		Question question = questionService.getQuestion(quizzService.getQuizzes().size());
-		Answer a = new Answer(question, answer, correct, false);
-		answerRepository.save(a);
+	//public String addAnswer(@Valid @ModelAttribute Answer answer, BindingResult answerResult){
+		Question question = (questionService.getQuestion(quizzService.getQuizzes().size()));
+		Answer a = new Answer(question, answer, correct, "ACTIVE");
+//		answerRepository.save(a);
+//		if(answerResult.hasErrors()) {
+//			return "answer_new";
+//		}
+		answerService.addAnswer(a);
 		return "redirect:/quizz/new/question";
 	}
 	
@@ -175,6 +181,37 @@ public class QuizzController {
 		//questionService.updateQuestion(questionService.getQuestion(que.getId()));
 		//answerService.updateAnswer(an);
 		return "redirect:/quizz/";
+	}
+	
+	@GetMapping("/update/question/update/{id}")
+	public String questionNew(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("quizz", quizzService.getQuizz(id));
+		//model.addAttribute("users", userService.getUsers());
+		model.addAttribute("question", questionService.getQuestion(id));
+		
+		//model.addAttribute("type", )
+		//model.addAttribute("answers", answerService.getAnswers());
+		//model.addAttribute("languages", languageService.getLanguages());
+		//model.addAttribute("themes", themeService.getThemes());
+		return "question_update";
+	}
+	
+	@PostMapping("/update/question/update/{id}")
+	public String questionUpdate(@PathVariable("id") Integer id, @Valid @ModelAttribute Question q, BindingResult result) {
+		if(result.hasErrors())
+			return "question_update";
+		questionService.updateQuestion(q);
+		System.out.println(id);
+//		quizzService.updateQuizz(q);
+//		System.out.println("queID: ");
+//		questions = q.getQuestions();
+//		for(int i = 0; i < questions.size(); i++) {
+//			System.out.println(questionService.getQuizzId(questions.get(i)));
+//		}
+		//System.out.println(que.getId());
+		//questionService.updateQuestion(questionService.getQuestion(que.getId()));
+		//answerService.updateAnswer(an);
+		return "redirect:/quizz/update/{quizz.id}";
 	}
 	
 	@GetMapping("/delete/{id}")

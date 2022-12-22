@@ -15,20 +15,20 @@
 				<div class="card">
 					<div class="card-header">Pridėti naują temą</div>
 					<div class="card-body">
-						<form action="/theme/new" method="post" th:object="${theme}">
+						<form action="/user/theme/new" method="post" th:object="${theme}">
 						    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 							<div class="mb-3">
 								<label class="form-label">Tema</label>
 								<input type="text" class="form-control" name="theme" >
-								<!--  <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
+								  <div class="alert alert-danger" th:if="${#fields.hasErrors('theme')}">
 									<ul>
 										<li th:each="klaida:${#fields.errors('theme')}" th:text="${klaida}"></li>
 									</ul>
-								</div> -->
+								</div>
 							</div>
 							
 							<button type="submit" class="btn btn-success">Pridėti</button>
-							<a class="btn btn-primary" href="/theme/">Atgal į temų sąrašą</a>
+							<a class="btn btn-secondary" href="/user/theme/">Atgal į temų sąrašą</a>
 						</form>
 					</div>
 				</div>

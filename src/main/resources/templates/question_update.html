@@ -16,17 +16,18 @@
 				<div class="card">
 					<div class="card-header">Atnaujinti klausimyną</div>
 					<div class="card-body">
-						<form th:action="'/quizz/update/'+${quizz.id}" method="post" th:object="${quizz}">
+						<form th:action="'/quizz/question/update/'+${question.id}" method="post" th:object="${question}">
 						    <input type="hidden" name="id" th:value="*{id}">
 							<div class="mb-3">
 								<label class="form-label">Pavadinimas</label>
-								<input type="text" class="form-control" name="name" th:value="*{name}"> 
+								<input type="text" class="form-control" name="question" th:value="*{question}"> 
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Kalba</label>
-								<select class="form-control" name="language">
-									<option ></option>
-									<option th:each="language: ${languages}" th:value="${language.id}" th:text="${language.language}"></option>
+								<select class="form-control" name="type">
+									<option> </option>
+									<option th:value="TM">Tiesa/Melas</option>
+									<option th:value="P">Pasirenkamasis</option>
 								</select>
 							</div>
 							<!-- <div class="mb-3">
@@ -37,29 +38,15 @@
 								</select>
 							</div> -->
 							<div class="mb-3">
-								<label class="form-label">Tema</label>
-								<select class="form-control" name="theme">
-									<option ></option>
-									<option th:each="theme: ${themes}" th:value="${theme.id}" th:text="${theme.theme}"></option>
-								</select>
-							</div>
-							<div class="mb-3">
-								<label class="form-label">Klausimai</label>
-								<ol type="1">
-									<li th:each="question: ${quizz.questions}">
-										<!--  <input type="hidden" th:value="*{question.id}">-->
-										<input type="text" th:value="${question.question}">
-										<a class="btn btn-secondary" href="'/question/update/'+{question.id}">Atnaujinti klausimą</a>
-										<ol type="a">
-											<li th:each="answer: ${question.answers}">
-												<span th:value="${answer.answer}"></span>
-											</li>
-										</ol>
-									</li>
-								</ol>
+								<label class="form-label">Atsakymu kiekis</label>
+								<input type="number" class="form-control" name="answerQuantity" th:value="*{answerQuantity}">
+								<!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
+									<ul>
+										<li th:each="klaida:${#fields.errors('name')}" th:text="${klaida}"></li>
+									</ul>-->
 							</div>
 							<button type="submit" class="btn btn-success">Atnaujinti</button>
-							<a class="btn btn-secondary" href="/user/">Atgal į profilio peržiūrą</a>							
+							<a class="btn btn-secondary" href="'/quizz/udate/'+${quizz.id}">Atgal į profilio peržiūrą</a>							
 						</form>
 					
 					</div>

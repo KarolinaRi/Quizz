@@ -9,8 +9,10 @@
 </head>
 <body>
 	<div th:insert="fragments/navigation.html :: nav"></div>
+	<h1>Temų sąrašas</h1>
 	<div class="container mt-3">
-		<a href="/theme/new" class="btn btn-success">Pridėti naują temą</a>
+		<a href="/user/theme/new" class="btn btn-success">Pridėti naują temą</a>
+		<a href="/user/" class="btn btn-secondary">Grįžti į profilio peržiūrą</a>
 		<div class="row">
 			<div class="col-md mt-3">
 				<div class="card">	
@@ -26,8 +28,8 @@
 							  	<td th:text="${theme.theme}"></td>
 						  
 							  	<td style="width: 200px;">
-							  		<a th:href="'/theme/update/'+${theme.id}" class="btn btn-success">Redaguoti temą</a>
-									<a th:href="'/theme/delete/'+${theme.id}" class="btn btn-danger">Pašalinti temą</a>
+							  		<a th:href="'/user/theme/update/'+${theme.id}" class="btn btn-success">Redaguoti temą</a>
+									<a th:href="'/user/theme/delete/'+${theme.id}" class="btn btn-danger">Pašalinti temą</a>
 							  	</td>
 						  	</tr>
 						</table>

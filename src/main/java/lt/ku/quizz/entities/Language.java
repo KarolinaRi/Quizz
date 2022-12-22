@@ -1,5 +1,6 @@
 package lt.ku.quizz.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class Language {
 	private String language;
 	
 	@OneToMany(mappedBy = "language")
-	private List<Quizz> quizzes;
+	private List<Quizz> quizzes = new ArrayList<Quizz>();
 
 	public Language() {
 		super();

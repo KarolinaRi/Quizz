@@ -33,17 +33,17 @@
 								<label class="form-label">Naudotojo vardas</label>
 								<input type="text" class="form-control" name="username" th:value="*{username}"> 
 							</div>
-							<!-- <div class="mb-3">
+							<div class="mb-3">
 								<label class="form-label">Slaptažodis</label>
-								<input type="text" class="form-control" name="password" th:value="*{password}"> 
-							</div> -->
+								<input type="password" class="form-control" name="password" th:value="*{password}"> 
+							</div> 
 							<!-- TODO: Pridet if admin, kad tik admin galetu keiti role -->
 							<div th:if="*{role}=='admin'" class="mb-3">
 								<label class="form-label">Rolė</label>
 								<input type="text" class="form-control" name="role" th:value="*{role}"> 
 							</div>
 							<button type="submit" class="btn btn-success">Atnaujinti</button>
-							<a class="btn btn-primary" href="/user/">Atgal į profilį</a>
+							<a class="btn btn-secondary" href="/user/">Atgal į profilį</a>
 						</form>
 					
 					</div>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-<nav th:fragment="nav" class="navbar navbar-expand-md navbar-light bg-light">
+<nav th:fragment="nav" class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
     <a class="navbar-brand" href="/">Klausimynas</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -20,17 +20,15 @@
         </li> 
         
       </ul>
-      <div class="d-flex me-3" sec:authorize="isAuthenticated()" >
-      	Sveiki: <span sec:authentication="name"></span>
-      </div>
+      
       <div class="d-flex" sec:authorize="isAuthenticated()">
-      	<a href="/logout" class="btn btn-primary">Atsijungti</a>
+      	<a href="/logout" class="btn btn-secondary">Atsijungti</a>
       </div>
        <div class="d-flex" sec:authorize="!isAuthenticated()">
-      	<a href="/login" class="btn btn-primary">Prisijungti</a>
+      	<a href="/login" class="btn btn-secondary">Prisijungti</a>
       </div>
       <div class="d-flex" sec:authorize="!isAuthenticated()">
-      	<a href="/user/new" class="btn btn-primary">Registracija</a>
+      	<a href="/user/new" class="btn btn-secondary">Registracija</a>
       </div>
     </div>
     </div>

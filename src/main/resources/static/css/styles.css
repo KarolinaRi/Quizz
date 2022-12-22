@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 body{
-	background-color: #cdb4db;
+	background-color: #ccd5ae;
 	height:100%;
 	margin:0;
 }
@@ -26,5 +26,18 @@ h1{
 .container{
 	 margin: auto;
   top: 50%;
+}
 
+.card-header{
+	background-color: #e9edc9;
+}
+.card-body{
+	background-color: #fefae0;
+}
+.admin-form{
+	 display: inline;
+}
+
+#greeting{
+	color:#ffffff;
 }

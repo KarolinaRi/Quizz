@@ -2,6 +2,8 @@ package lt.ku.quizz.services;
 
 import java.util.List;
 
+import javax.persistence.PreRemove;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +33,14 @@ public class AnswerService {
 		old.setQuestion(answer.getQuestion());
 		old.setAnswer(answer.getAnswer());
 		old.setCorrect(answer.isCorrect());
-		old.setDeleted(answer.isDeleted());
+		//old.setDeleted(answer.isDeleted());
 		answerRepository.save(old);
 		return old;
 	}
-	
+	@PreRemove
 	public void deleteAnswer(Integer id) {
-		answerRepository.deleteById(id);
+		//answerRepository.deleteById(id);
+		Answer a = getAnswer(id);
+		a.setDeleted("DELETED");
 	}
 }

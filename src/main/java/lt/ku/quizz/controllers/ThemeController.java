@@ -18,7 +18,7 @@ import lt.ku.quizz.repositories.ThemeRepository;
 import lt.ku.quizz.services.ThemeService;
 
 @Controller
-@RequestMapping("/user/theme")
+@RequestMapping("user/theme")
 public class ThemeController {
 	
 	@Autowired
@@ -40,15 +40,15 @@ public class ThemeController {
 	}
 	
 	@PostMapping("/new")
-	public String addTheme(@Valid @ModelAttribute Theme theme, BindingResult themeResult) {
+	public String addTheme(@Valid @ModelAttribute Theme theme, BindingResult themeResult, Model model) {
 		if(themeResult.hasErrors()) {
 			return "theme_new";
 		}
 		themeService.addTheme(theme);
 //		Theme t = new Theme(theme);
 //		themeService.addTheme(t);
-//		model.addAttribute("themes", themeService.getThemes());
-		return "redirect:/theme/";
+		model.addAttribute("themes", themeService.getThemes());
+		return "redirect:/user/theme/";
 	}
 	
 	@GetMapping("/update/{id}")
@@ -62,13 +62,13 @@ public class ThemeController {
 		Theme t= themeService.getTheme(id);
 		t.setTheme(theme);
 		themeService.updateTheme(t);
-		return "redirect:/theme/";
+		return "redirect:/user/theme/";
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String themeDelete(@PathVariable("id") Integer id) {
 		themeService.deleteTheme(id);
-		return "redirect:/theme/";
+		return "redirect:/user/theme/";
 	}
 
 }

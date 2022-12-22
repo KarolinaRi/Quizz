@@ -1,5 +1,6 @@
 package lt.ku.quizz.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ public class Theme {
 	private String theme;
 	
 	@OneToMany(mappedBy = "theme")
-	private List<Quizz> quizzes;
+	private List<Quizz> quizzes = new ArrayList<Quizz>();
 
 	public Theme() {
 		super();
@@ -53,12 +54,12 @@ public class Theme {
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
-
-	public List<Quizz> getQuizzes() {
-		return quizzes;
-	}
-
-	public void setQuizzes(List<Quizz> quizzes) {
-		this.quizzes = quizzes;
-	}
+//
+//	public List<Quizz> getQuizzes() {
+//		return quizzes;
+//	}
+//
+//	public void setQuizzes(List<Quizz> quizzes) {
+//		this.quizzes = quizzes;
+//	}
 }

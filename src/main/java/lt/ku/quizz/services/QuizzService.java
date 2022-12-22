@@ -59,6 +59,17 @@ public class QuizzService {
 	}
 	
 	public void deleteQuizz(Integer id) {
-		quizzRepository.deleteById(id);
+		
+		Quizz q = getQuizz(id);
+		q.setDeleted(Boolean.TRUE);
+//		List<Question> questions = questionService.findByQuizz(q);
+//		for(int i = 0; i < questions.size(); i++) {
+//			Question qq = questionService.getQuestion(questions.get(i).getId());
+//			questionService.deleteQuestion(qq.getId());
+//			qq.setDeleted(Boolean.TRUE);
+//		}
+//		q.setDeleted(Boolean.TRUE);
+		
+		//quizzRepository.deleteById(id);
 	}
 }

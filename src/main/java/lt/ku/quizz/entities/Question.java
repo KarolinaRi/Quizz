@@ -13,11 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "question")
+@SQLDelete(sql = "UPDATE question SET deleted = 'true'  id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause="is_deleted=0")
 public class Question {
 	
@@ -40,7 +43,7 @@ public class Question {
 	@Column(nullable = false)
 	private String type; // = {"True/False", "Pasirenkami"};
 	
-	private Integer answerQuantity;
+	private Integer answerQuantity = 1;
 	
 	@Column(nullable=false, name="is_deleted")
 	private Boolean deleted = false;

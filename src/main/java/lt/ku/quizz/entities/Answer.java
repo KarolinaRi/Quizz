@@ -2,19 +2,25 @@ package lt.ku.quizz.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "answer")
+@SQLDelete(sql = "UPDATE answer SET deleted = 'DELETED'  id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause="is_deleted=0")
 public class Answer {
 
@@ -34,7 +40,8 @@ public class Answer {
 	private Boolean correct = false;
 	
 	@Column(nullable=false, name="is_deleted")
-	private Boolean deleted = false;
+   // @Enumerated(EnumType.STRING)
+	private String deleted = "ACTIVE";
 
 	public Answer() {
 		super();
@@ -42,7 +49,7 @@ public class Answer {
 
 	public Answer(Question question,
 			@Length(min = 3, max = 100, message = "Atsakymas turi būti sudarytas iš 3 - 100 simbolių") String answer,
-			Boolean correct, Boolean deleted) {
+			Boolean correct, String deleted) {
 		super();
 		this.question = question;
 		this.answer = answer;
@@ -82,12 +89,16 @@ public class Answer {
 		this.correct = correct;
 	}
 
-	public Boolean isDeleted() {
+	public String isDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(String deleted) {
 		this.deleted = deleted;
 	}
 	
+//	@PreRemove
+//	public void deleteAnswer() {
+//		this.deleted = deleted.DELETED;
+//	}
 }

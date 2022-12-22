@@ -20,6 +20,9 @@ public class QuestionService {
 	@Autowired
 	QuizzService quizzService;
 	
+	@Autowired 
+	AnswerService answerService;
+	
 	public List<Question> getQuestions(){
 		return questionRepository.findAll();
 	}
@@ -49,7 +52,16 @@ public class QuestionService {
 	}
 	
 	public void deleteQuestion(Integer id) {
-		questionRepository.deleteById(id);
+		//questionRepository.deleteById(id);
+		List<Answer> answers = answerService.getAnswers();
+		for(int i = 0; i < answers.size(); i++) {
+			if(answers.get(i).getId()==id) {
+				answerService.deleteAnswer(answers.get(i).getId());
+				//answers.get(i).setDeleted(true);
+			}
+		}
+//		Question q = getQuestion(id);
+//		q.setDeleted(true);
 	}
 	
 	public int findAnswerIdCorrect(int questionId) {
