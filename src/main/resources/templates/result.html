@@ -27,7 +27,7 @@
 										<input type="hidden" th:value="${question.question}" th:text="${question.question}">
 										<ol type="a">
 											<li th:each="answer: ${question.answers}">
-												<input type="radio" th:value="${answer.answer}" th:text="${answer.answer}">
+												<input type="hidden" th:value="${answer.answer}" th:text="${answer.answer}">
 											</li>
 										</ol>
 									</li>

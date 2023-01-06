@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "theme")
@@ -54,12 +53,4 @@ public class Theme {
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
-//
-//	public List<Quizz> getQuizzes() {
-//		return quizzes;
-//	}
-//
-//	public void setQuizzes(List<Quizz> quizzes) {
-//		this.quizzes = quizzes;
-//	}
 }

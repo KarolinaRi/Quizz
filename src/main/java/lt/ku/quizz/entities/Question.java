@@ -1,6 +1,5 @@
 package lt.ku.quizz.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -20,7 +19,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "question")
-@SQLDelete(sql = "UPDATE question SET deleted = 'true'  id = ?", check = ResultCheckStyle.COUNT)
+@SQLDelete(sql = "UPDATE question SET deleted = '1'  id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause="is_deleted=0")
 public class Question {
 	
@@ -29,7 +28,6 @@ public class Question {
 	private Integer id;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "quizz_id")
 	private Quizz quizz;
 	
 	
@@ -41,7 +39,7 @@ public class Question {
 	private List<Answer> answers;
 
 	@Column(nullable = false)
-	private String type; // = {"True/False", "Pasirenkami"};
+	private String type; 
 	
 	private Integer answerQuantity = 1;
 	
@@ -51,18 +49,6 @@ public class Question {
 	public Question() {
 		super();
 	}
-
-//	public Question(Quizz quizz,
-//			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question,
-//			List<Answer> answers, String type, Integer answerQuantity, Boolean deleted) {
-//		super();
-//		this.quizz = quizz;
-//		this.question = question;
-//		this.answers = answers;
-//		this.type = type;
-//		this.answerQuantity = answerQuantity;
-//		this.deleted = deleted;
-//	}
 	
 	public Question(Quizz quizz,
 			@Length(min = 3, max = 100, message = "Klausimo ilgis turi buti nuo 3 iki 100 simboliu") String question, String type, Integer answerQuantity,

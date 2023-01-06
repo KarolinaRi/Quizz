@@ -4,12 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import lt.ku.quizz.entities.Answer;
-import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.entities.Theme;
-import lt.ku.quizz.repositories.AnswerRepository;
-import lt.ku.quizz.repositories.LanguageRepository;
 import lt.ku.quizz.repositories.ThemeRepository;
 
 @Service

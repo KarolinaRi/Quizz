@@ -1,13 +1,9 @@
 package lt.ku.quizz.controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +36,9 @@ public class ThemeController {
 	}
 	
 	@PostMapping("/new")
-	public String addTheme(@Valid @ModelAttribute Theme theme, BindingResult themeResult, Model model) {
-		if(themeResult.hasErrors()) {
-			return "theme_new";
-		}
-		themeService.addTheme(theme);
-//		Theme t = new Theme(theme);
-//		themeService.addTheme(t);
+	public String addTheme(@RequestParam("theme") String theme, Model model) {
+		Theme t = new Theme(theme);
+		themeService.addTheme(t);
 		model.addAttribute("themes", themeService.getThemes());
 		return "redirect:/user/theme/";
 	}

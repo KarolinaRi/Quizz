@@ -41,6 +41,6 @@ public class AnswerService {
 	public void deleteAnswer(Integer id) {
 		//answerRepository.deleteById(id);
 		Answer a = getAnswer(id);
-		a.setDeleted("DELETED");
+		a.setDeleted(true);
 	}
 }

@@ -2,20 +2,15 @@ package lt.ku.quizz.entities;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +23,6 @@ public class User implements UserDetails{
 	private Integer id;
 	
 	@Column(nullable = false, length = 64, unique = true)
-//	@NotNull
-	//@UniqueElements(message="Toks naudotojo vardas jau užregistruotas")
 	@Length(min=3, max=64, message="Naudotojo vardas turi būti sudarytas iš 3 - 64 simbolių")
 	private String username;
 	
@@ -49,18 +42,10 @@ public class User implements UserDetails{
 	private String surname;
 	
 	@Email(message="El. pašto adresas turi būti tvarkingas")
-//	@UniqueElements(message="Toks el. pašto adresas jau užregistruotas")
 	private String email;
 	
 	@Column(nullable = false)
 	private String role = "user";
-	
-//	@OneToMany(mappedBy = "user")
-//	List<Quizz> user_quizzes;
-	
-	//Sprestu klausimynu listas
-	
-	//Sukurtu klausimynu listas
 	
 	public User() {
 		super();
@@ -81,23 +66,6 @@ public class User implements UserDetails{
 		this.email = email;
 		this.role = role;
 	}
-
-
-//	public User(@NotNull @UniqueElements(message = "Toks naudotojo vardas jau užregistruotas") String username,
-//			@NotNull @Length(min = 8, max = 64, message = "Slaptažodis turi būti sudarytas iš bent 8 simbolių") String password,
-//			@NotNull @Length(min = 3, max = 20, message = "Vardas turi buti sudarytas is 3 - 20 simbolių") String name,
-//			@NotNull @Length(min = 3, max = 25, message = "Pavardė turi būti sudaryta is 3 - 25 simbolių") String surname,
-//			@Email(message = "El. pašto adresas turi būti tvarkingas") @UniqueElements(message = "Toks el. pašto adresas jau užregistruotas") String email,
-//			String role, List<Quizz> user_quizzes) {
-//		super();
-//		this.username = username;
-//		this.password = password;
-//		this.name = name;
-//		this.surname = surname;
-//		this.email = email;
-//		this.role = role;
-//		this.user_quizzes = user_quizzes;
-//	}
 
 	public Integer getId() {
 		return id;

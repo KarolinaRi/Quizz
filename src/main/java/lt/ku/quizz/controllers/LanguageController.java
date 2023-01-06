@@ -1,13 +1,9 @@
 package lt.ku.quizz.controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,11 +32,9 @@ public class LanguageController {
 	}
 	
 	@PostMapping("/new")
-	public String addLanguage(@Valid @ModelAttribute Language language, BindingResult languageResult) {
-		if(languageResult.hasErrors()) {
-			return "language_new";
-		}
-		languageService.addLanguage(language);
+	public String addLanguage(@RequestParam("language") String language) {
+		Language lang = new Language(language);
+		languageService.addLanguage(lang);
 		return "redirect:/user/language/";
 	}
 	

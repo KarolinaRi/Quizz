@@ -15,14 +15,13 @@
 				<div class="card">
 					<div class="card-header">Naudotojų duomenys</div>
 					<div class="card-body">
-						<a href="/user/new" class="btn btn-success">Pridėti naują naudotoją</a>
+						<a href="/user/" class="btn btn-secondary">Grįžti į profilio peržiūrą</a>
 						<table class="table">
 						  <tr>
 						  	<th>Vardas</th>
 						  	<th>Pavardė</th>
 						  	<th>El. apštas</th>
 						  	<th>Naudotojo vardas</th>
-						  	<th>Slaptažodis</th>
 						  	<th>Rolė</th>
 						  	<th>Veiksmai</th>
 						  </tr>
@@ -32,7 +31,6 @@
 						  	<td th:text="${user.surname}"></td>
 						  	<td th:text="${user.email}"></td>
 						  	<td th:text="${user.username}"></td>
-						  	<td th:text="${user.password}"></td>
  						    <td th:text="${user.role}"></td>
 						  
 						  	<td style="width: 200px;">

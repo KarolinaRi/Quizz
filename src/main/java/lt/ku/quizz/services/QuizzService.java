@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lt.ku.quizz.entities.Question;
 import lt.ku.quizz.entities.Quizz;
 import lt.ku.quizz.repositories.QuestionRepository;
 import lt.ku.quizz.repositories.QuizzRepository;
@@ -61,15 +60,7 @@ public class QuizzService {
 	public void deleteQuizz(Integer id) {
 		
 		Quizz q = getQuizz(id);
-		q.setDeleted(Boolean.TRUE);
-//		List<Question> questions = questionService.findByQuizz(q);
-//		for(int i = 0; i < questions.size(); i++) {
-//			Question qq = questionService.getQuestion(questions.get(i).getId());
-//			questionService.deleteQuestion(qq.getId());
-//			qq.setDeleted(Boolean.TRUE);
-//		}
-//		q.setDeleted(Boolean.TRUE);
-		
-		//quizzRepository.deleteById(id);
+		q.setDeleted(true);
+
 	}
 }

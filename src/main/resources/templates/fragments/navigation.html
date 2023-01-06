@@ -20,7 +20,9 @@
         </li> 
         
       </ul>
-      
+      <div class="d-flex me-3" id="greeting" sec:authorize="isAuthenticated()" >
+      	<p>Sveiki, <span sec:authentication="name"></span></p>
+      </div>
       <div class="d-flex" sec:authorize="isAuthenticated()">
       	<a href="/logout" class="btn btn-secondary">Atsijungti</a>
       </div>

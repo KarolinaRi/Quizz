@@ -18,11 +18,10 @@ import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "quizz")
-@SQLDelete(sql = "UPDATE quizz SET deleted = true  id = ?", check = ResultCheckStyle.COUNT)
+@SQLDelete(sql = "UPDATE quizz SET deleted = '1'  id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause="is_deleted=0")
 public class Quizz {
 	
@@ -56,16 +55,6 @@ public class Quizz {
 		super();
 	}
 
-//	public Quizz(User user, String name, Language language, Theme theme, Boolean deleted) {
-//		super();
-//		this.user = user;
-//		this.name = name;
-//		this.language = language;
-//		this.theme = theme;
-//		this.deleted = deleted;
-//	}
-//	
-
 	public Quizz(User user,
 			@Length(min = 3, max = 100, message = "Klausimyno pavadinimas turi būti sudarytas iš 3 - 100 simbolių") String name,
 			Language language, Theme theme, Boolean deleted) {
@@ -76,15 +65,6 @@ public class Quizz {
 		this.theme = theme;
 		this.deleted = deleted;
 	}
-
-//	public Quizz(User user, String name, List<Question> questions, Language language, Boolean deleted) {
-//		super();
-//		this.user = user;
-//		this.name = name;
-//		this.questions = questions;
-//		this.language = language;
-//		this.deleted = deleted;
-//	}
 		
 	public Integer getId() {
 		return id;

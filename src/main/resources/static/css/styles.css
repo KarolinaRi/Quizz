@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 body{
-	background-color: #ccd5ae;
+	background-color: #adb5bd;
 	height:100%;
 	margin:0;
 }
@@ -29,15 +29,20 @@ h1{
 }
 
 .card-header{
-	background-color: #e9edc9;
+	background-color: #ced4da;
 }
 .card-body{
-	background-color: #fefae0;
+	background-color: #e9ecef;
 }
 .admin-form{
 	 display: inline;
 }
 
 #greeting{
-	color:#ffffff;
+	color: #ffffff;
+	margin: 0;
+  /*position: absolute;*/
+  top: 50%;
+  /*-ms-transform: translateY(-50%);
+  transform: translateY(-50%);*/
 }

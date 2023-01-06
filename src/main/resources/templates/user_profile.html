@@ -21,7 +21,12 @@
 						<form class="admin-form" action="/user/language/" method="get">
 							<button type=submit class="btn btn-secondary">Kalbų sąrašas</button>						
 						</form>
-				        
+				   		<form class="admin-form" action="/user/new" method="get">
+				   			<button class="btn btn-secondary" type="submit">Pridėti naują naudotoją</button>
+				   		</form>
+				   		<form class="admin-form" action="/user/list" method="get">
+				   			<button class="btn btn-secondary" type="submit">Peržiūrėti naudotojų sąrašą</button>
+				   		</form>
 					</div>
 					<div class="card">
 						<div class="card-header">Mano duomenys</div>
@@ -55,7 +60,7 @@
 								   
 								   <td style="width: 200px;">
 								  		<a th:href="'/quizz/update/'+${quizz.id}" class="btn btn-success">Redaguoti</a>
-								  		<a th:href="'/quizz/delete/'+${quizz.id}" class="btn btn-danger">Ištrinti</a>
+								  		<a th:href="'/quizz/delete/'+${quizz.id}" class="btn btn-danger disabled">Ištrinti</a>
 							  			<a th:href="'/quizz/play/'+${quizz.id}" class="btn btn-secondary">Žaisti</a>
 							  		</td>
 							  </tr>

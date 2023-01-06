@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lt.ku.quizz.entities.Answer;
-import lt.ku.quizz.entities.Language;
 import lt.ku.quizz.entities.Question;
 import lt.ku.quizz.entities.Quizz;
-import lt.ku.quizz.entities.Theme;
 import lt.ku.quizz.entities.User;
 import lt.ku.quizz.repositories.AnswerRepository;
 import lt.ku.quizz.repositories.QuestionRepository;
@@ -82,7 +80,6 @@ public class QuizzController {
 	
 	@GetMapping("/new")  
 	public String quizzNew(Model model) {
-    	//model.addAttribute("users", userService.getUsers());
 		model.addAttribute("languages", languageService.getLanguages());
 		model.addAttribute("themes", themeService.getThemes());
 		model.addAttribute("quizz", new Quizz());
@@ -90,7 +87,6 @@ public class QuizzController {
 	}
 	
 	@PostMapping("/new")
-	//public String addQuizz(@RequestParam("name") String name, @RequestParam("language") Language language, @RequestParam("theme") Theme theme) {
 	public String AddQuizz(@Valid @ModelAttribute Quizz quizz, BindingResult quizzResult) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -98,14 +94,10 @@ public class QuizzController {
 			if(quizzResult.hasErrors()) {
 				return "quizz_new";
 			}
-			
-
 			String username = ((UserDetails)principal).getUsername();
 			User user = userRepository.findByUsername(username);
 			quizz.setUser(user);
 			quizzService.addQuizz(quizz);
-//			Quizz q = new Quizz(user, name, language, theme, false);
-//			quizzRepository.save(q);
 		}
 		
 		return "redirect:/quizz/new/question/";
@@ -114,7 +106,6 @@ public class QuizzController {
 	
 	@GetMapping("/new/question")
 	public String questionNew(Model model) {
-		//model.addAttribute("quizzes", quizzService.getQuizzes());
 		model.addAttribute("question", new Question());
 		return "question_new";
 	}
@@ -126,13 +117,6 @@ public class QuizzController {
 	    Quizz quizz = quizzService.getQuizz(id);
 		Question q = new Question(quizz, question, type, answerQuantity, false);
 		System.out.println(quizz.getId());
-
-//		questionRepository.save(q);
-//	public String addQuestion(@Valid @ModelAttribute Question question, BindingResult questionResult) {
-//		question.setQuizz(quizzService.getQuizz(quizzService.getQuizzes().size()));
-//		if(questionResult.hasErrors()) {
-//			return "question_new";
-//		}
 		questionService.addQuestion(q);
 		return "redirect:/quizz/new/question/answer";
 	}
@@ -140,20 +124,15 @@ public class QuizzController {
 	@GetMapping("/new/question/answer")
 	public String answerNew(Model model) {
 		model.addAttribute("questions", questionService.getQuestions());
-		model.addAttribute("question", questionService.getQuestion(quizzService.getQuizzes().size()));
+		model.addAttribute("question", questionService.getQuestion(questionService.getQuestions().size()));
 		model.addAttribute("themes", themeService.getThemes());
 		return "answer_new";
 	}
 	
 	@PostMapping("/new/question/answer")
 	public String addAnswer(@RequestParam("answer") String answer, @RequestParam("correct") Boolean correct) {
-	//public String addAnswer(@Valid @ModelAttribute Answer answer, BindingResult answerResult){
-		Question question = (questionService.getQuestion(quizzService.getQuizzes().size()));
-		Answer a = new Answer(question, answer, correct, "ACTIVE");
-//		answerRepository.save(a);
-//		if(answerResult.hasErrors()) {
-//			return "answer_new";
-//		}
+		Question question = questionService.getQuestion(questionService.getQuestions().size());
+		Answer a = new Answer(question, answer, correct, false);
 		answerService.addAnswer(a);
 		return "redirect:/quizz/new/question";
 	}
@@ -177,22 +156,13 @@ public class QuizzController {
 		for(int i = 0; i < questions.size(); i++) {
 			System.out.println(questionService.getQuizzId(questions.get(i)));
 		}
-		//System.out.println(que.getId());
-		//questionService.updateQuestion(questionService.getQuestion(que.getId()));
-		//answerService.updateAnswer(an);
 		return "redirect:/quizz/";
 	}
 	
 	@GetMapping("/update/question/update/{id}")
 	public String questionNew(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("quizz", quizzService.getQuizz(id));
-		//model.addAttribute("users", userService.getUsers());
 		model.addAttribute("question", questionService.getQuestion(id));
-		
-		//model.addAttribute("type", )
-		//model.addAttribute("answers", answerService.getAnswers());
-		//model.addAttribute("languages", languageService.getLanguages());
-		//model.addAttribute("themes", themeService.getThemes());
 		return "question_update";
 	}
 	
@@ -202,15 +172,6 @@ public class QuizzController {
 			return "question_update";
 		questionService.updateQuestion(q);
 		System.out.println(id);
-//		quizzService.updateQuizz(q);
-//		System.out.println("queID: ");
-//		questions = q.getQuestions();
-//		for(int i = 0; i < questions.size(); i++) {
-//			System.out.println(questionService.getQuizzId(questions.get(i)));
-//		}
-		//System.out.println(que.getId());
-		//questionService.updateQuestion(questionService.getQuestion(que.getId()));
-		//answerService.updateAnswer(an);
 		return "redirect:/quizz/update/{quizz.id}";
 	}
 	

@@ -26,23 +26,13 @@
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Atsakymas</label>
-								<input type="text" class="form-control" name="answer.answer" >
-								<!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('answer')}">
-									<ul>
-										<li th:each="klaida:${#fields.errors('answer')}" th:text="${klaida}"></li>
-									</ul>
-								</div> -->
+								<input type="text" class="form-control" name="answer" >
 							</div>
 							
 							<div class="mb-3">
-								<label class="form-label">Ar atsakymas teisingas?</label>
-								<input type="radio" name="answer.correct" th:text="Teisingas" th:value="1"><br>
-								<input type="radio" name="answer.correct" th:text="Neteisingas" th:value="0">
-								<!-- <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
-									<ul>
-										<li th:each="klaida:${#fields.errors('name')}" th:text="${klaida}"></li>
-									</ul>
-								</div> -->
+								<label class="form-label">Ar atsakymas teisingas?</label><br>
+								<input type="radio" name="correct" th:text="Teisingas" th:value="1"><br>
+								<input type="radio" name="correct" th:text="Neteisingas" th:value="0">
 							</div>
 							<button type="submit" class="btn btn-success">Pridėti</button>
 						</form>

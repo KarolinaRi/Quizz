@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -63,6 +62,12 @@ public class UserController {
 		return "user_profile";
 	}
 	
+	@GetMapping("/list")  
+	public String userList(Model model) {
+		model.addAttribute("users", userService.getUsers());
+		return "user_list";
+	}
+	
 	@GetMapping("/new")  
 	public String userNew(Model model) {
 		model.addAttribute("user", new User());
@@ -99,7 +104,6 @@ public class UserController {
 	
 	@GetMapping("/theme")
 	public List<Theme> themes() {
-		//model.addAttribute("themes", themeService.getThemes());
 		List<Theme> themes = themeService.getThemes();
 		return themes;
 	}
@@ -112,7 +116,6 @@ public class UserController {
 	
 	@GetMapping("/language")
 	public List<Language> languages() {
-		//model.addAttribute("themes", themeService.getThemes());
 		List<Language> languages = languageService.getLanguages();
 		return languages;
 	}
