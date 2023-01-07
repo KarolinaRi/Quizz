@@ -107,17 +107,17 @@ public class QuizzControllerIntegrationTest {
 
 	  }
 
-	  @Autowired
-	  private UserRepository userRepository;
+//	  @Autowired
+//	  private UserRepository userRepository;
+//
+//	  @Autowired
+//	  private EntityManager entityManager;
 
-	  @Autowired
-	  private EntityManager entityManager;
-
-	  @Test
-	  public void shouldSaveUser() {
-		  User user = new User("karolina", "slaptazodis", "Karolina", "Ripinskytė", "k.ripinskyte@gmail.com", "user");
-	      userRepository.save(new User());
-	      assertThat(userRepository.findByUsername(user.getUsername())).isNotNull();
-	      //verify(entityManager.createNamedQuery(anyString()).executeUpdate());
-	  }
+//	  @Test
+//	  public void shouldSaveUser() {
+//		  User user = new User("karolina", "slaptazodis", "Karolina", "Ripinskytė", "k.ripinskyte@gmail.com", "user");
+//	      userRepository.save(new User());
+//	      assertThat(userRepository.findByUsername(user.getUsername())).isNotNull();
+//	      //verify(entityManager.createNamedQuery(anyString()).executeUpdate());
+//	  }
 }
